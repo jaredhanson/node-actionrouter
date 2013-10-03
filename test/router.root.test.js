@@ -37,7 +37,7 @@ describe('Router#root', function() {
     it('should create handler for controller action', function() {
       var route = app.map['get'][0]
         , rv = route.handler();
-      expect(rv.controller).to.equal('pages');
+      expect(rv.controller).to.equal('PagesController');
       expect(rv.action).to.equal('main');
     });
   });
