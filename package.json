@@ -1,19 +1,21 @@
 {
-  "name": "locomotive-router",
+  "name": "actionrouter",
   "version": "0.0.1",
   "description": "Router module used within Locomotive.",
   "keywords": [
-    "locomotive",
     "router",
+    "mvc",
+    "model2",
     "connect",
-    "express"
+    "express",
+    "locomotive"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/jaredhanson/locomotive-router.git"
+    "url": "git://github.com/jaredhanson/node-actionrouter.git"
   },
   "bugs": {
-    "url": "http://github.com/jaredhanson/locomotive-router/issues"
+    "url": "http://github.com/jaredhanson/node-actionrouter/issues"
   },
   "author": {
     "name": "Jared Hanson",
