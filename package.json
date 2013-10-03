@@ -1,7 +1,7 @@
 {
   "name": "actionrouter",
   "version": "0.0.1",
-  "description": "Router module used within Locomotive.",
+  "description": "RESTful MVC router that dispatches to a controller and action.",
   "keywords": [
     "router",
     "mvc",
