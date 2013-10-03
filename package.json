@@ -1,0 +1,43 @@
+{
+  "name": "locomotive-router",
+  "version": "0.0.1",
+  "description": "Router module used within Locomotive.",
+  "keywords": [
+    "locomotive",
+    "router",
+    "connect",
+    "express"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jaredhanson/locomotive-router.git"
+  },
+  "bugs": {
+    "url": "http://github.com/jaredhanson/locomotive-router/issues"
+  },
+  "author": {
+    "name": "Jared Hanson",
+    "email": "jaredhanson@gmail.com",
+    "url": "http://www.jaredhanson.net/"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    }
+  ],
+  "main": "./lib",
+  "dependencies": {
+    "debug": "0.7.x"
+  },
+  "devDependencies": {
+    "mocha": "1.x.x",
+    "chai": "1.x.x"
+  },
+  "engines": {
+    "node": ">= 0.4.0"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/mocha --reporter spec --require test/bootstrap/node test/*.test.js test/**/*.test.js"
+  }
+}
