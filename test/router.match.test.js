@@ -37,7 +37,7 @@ describe('Router#match', function() {
     it('should create handler for controller action', function() {
       var route = app.map['get'][0]
         , rv = route.handler();
-      expect(rv.controller).to.equal('SongsController');
+      expect(rv.controller).to.equal('songs');
       expect(rv.action).to.equal('show');
     });
   });
@@ -69,7 +69,7 @@ describe('Router#match', function() {
     it('should create handler for controller action', function() {
       var route = app.map['post'][0]
         , rv = route.handler();
-      expect(rv.controller).to.equal('BandsController');
+      expect(rv.controller).to.equal('bands');
       expect(rv.action).to.equal('create');
     });
   });
@@ -101,7 +101,7 @@ describe('Router#match', function() {
     it('should create handler for controller action', function() {
       var route = app.map['post'][0]
         , rv = route.handler();
-      expect(rv.controller).to.equal('BandsController');
+      expect(rv.controller).to.equal('bands');
       expect(rv.action).to.equal('create');
     });
   });
@@ -137,7 +137,7 @@ describe('Router#match', function() {
     it('should create post handler for controller action', function() {
       var route = app.map['post'][0]
         , rv = route.handler();
-      expect(rv.controller).to.equal('BandsController');
+      expect(rv.controller).to.equal('bands');
       expect(rv.action).to.equal('create');
     });
     
@@ -155,7 +155,7 @@ describe('Router#match', function() {
     it('should create put handler for controller action', function() {
       var route = app.map['put'][0]
         , rv = route.handler();
-      expect(rv.controller).to.equal('BandsController');
+      expect(rv.controller).to.equal('bands');
       expect(rv.action).to.equal('create');
     });
   });
@@ -187,7 +187,7 @@ describe('Router#match', function() {
     it('should create handler for controller action', function() {
       var route = app.map['get'][0]
         , rv = route.handler();
-      expect(rv.controller).to.equal('FooBarController');
+      expect(rv.controller).to.equal('fooBar');
       expect(rv.action).to.equal('list');
     });
   });
@@ -219,7 +219,7 @@ describe('Router#match', function() {
     it('should create handler for controller action', function() {
       var route = app.map['get'][0]
         , rv = route.handler();
-      expect(rv.controller).to.equal('FooBarController');
+      expect(rv.controller).to.equal('fooBar');
       expect(rv.action).to.equal('list');
     });
   });
@@ -251,7 +251,7 @@ describe('Router#match', function() {
     it('should create handler for controller action', function() {
       var route = app.map['get'][0]
         , rv = route.handler();
-      expect(rv.controller).to.equal('BandsController');
+      expect(rv.controller).to.equal('bands');
       expect(rv.action).to.equal('list');
     });
   });
@@ -283,7 +283,7 @@ describe('Router#match', function() {
     it('should create handler for controller action', function() {
       var route = app.map['post'][0]
         , rv = route.handler();
-      expect(rv.controller).to.equal('BandsController');
+      expect(rv.controller).to.equal('bands');
       expect(rv.action).to.equal('create');
     });
   });
