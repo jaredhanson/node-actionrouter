@@ -16,7 +16,7 @@ describe('Router#root', function() {
     before(function() {
       router = new Router(handler);
       app = new MockApplication();
-      router.compile(function(method, path, handler) {
+      router.define(function(method, path, handler) {
         app[method](path, handler);
       });
       
