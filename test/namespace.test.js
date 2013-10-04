@@ -1,7 +1,7 @@
 var Namespace = require('../lib/namespace');
   
 
-describe.skip('Namespace', function() {
+describe('Namespace', function() {
   
   describe('constructed with no arguments', function() {
     var ns = new Namespace();
@@ -44,7 +44,7 @@ describe.skip('Namespace', function() {
     });
     
     it('should have module property', function() {
-      expect(ns.module).to.equal('Foo');
+      expect(ns.module).to.equal('foo');
     });
     
     it('should have helper property', function() {
@@ -77,7 +77,7 @@ describe.skip('Namespace', function() {
     });
     
     it('should have module property', function() {
-      expect(ns.module).to.equal('Bar');
+      expect(ns.module).to.equal('bar');
     });
     
     it('should have helper property', function() {
@@ -110,7 +110,7 @@ describe.skip('Namespace', function() {
     });
     
     it('should have module property', function() {
-      expect(ns.module).to.equal('Foo');
+      expect(ns.module).to.equal('foo');
     });
     
     it('should have helper property', function() {
@@ -177,7 +177,7 @@ describe.skip('Namespace', function() {
     });
     
     it('should have module property', function() {
-      expect(ns.module).to.equal('Http');
+      expect(ns.module).to.equal('http');
     });
     
     it('should have helper property', function() {
