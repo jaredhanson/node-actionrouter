@@ -23,7 +23,7 @@ describe('Router#match', function() {
       router.match('songs/:title', 'songs#show');
     })
     
-    it('should compile route', function() {
+    it('should define route', function() {
       expect(app.map['get']).to.be.an('array');
       expect(app.map['get']).to.have.length(1);
     });
@@ -55,7 +55,7 @@ describe('Router#match', function() {
       router.match('bands', 'bands#create', { via: 'post' });
     })
     
-    it('should compile route', function() {
+    it('should define route', function() {
       expect(app.map['post']).to.be.an('array');
       expect(app.map['post']).to.have.length(1);
     });
@@ -87,7 +87,7 @@ describe('Router#match', function() {
       router.match('bands', 'bands#create', { via: 'POST' });
     })
     
-    it('should compile route', function() {
+    it('should define route', function() {
       expect(app.map['post']).to.be.an('array');
       expect(app.map['post']).to.have.length(1);
     });
@@ -123,7 +123,7 @@ describe('Router#match', function() {
       expect(Object.keys(app.map)).to.have.length(2);
     });
     
-    it('should compile post route', function() {
+    it('should define post route', function() {
       expect(app.map['post']).to.be.an('array');
       expect(app.map['post']).to.have.length(1);
     });
@@ -141,7 +141,7 @@ describe('Router#match', function() {
       expect(rv.action).to.equal('create');
     });
     
-    it('should compile put route', function() {
+    it('should define put route', function() {
       expect(app.map['put']).to.be.an('array');
       expect(app.map['put']).to.have.length(1);
     });
@@ -160,6 +160,7 @@ describe('Router#match', function() {
     });
   });
   
+  // TODO: Move this to path test
   describe('shorthand notation with underscored path to underscored controller', function() {
     var router, app;
     
@@ -173,7 +174,7 @@ describe('Router#match', function() {
       router.match('foo_bar', 'foo_bar#list');
     })
     
-    it('should compile route', function() {
+    it('should define route', function() {
       expect(app.map['get']).to.be.an('array');
       expect(app.map['get']).to.have.length(1);
     });
@@ -192,6 +193,7 @@ describe('Router#match', function() {
     });
   });
   
+  // TODO: Move this to path test
   describe('shorthand notation with dasherized path to underscored controller', function() {
     var router, app;
     
@@ -205,7 +207,7 @@ describe('Router#match', function() {
       router.match('foo-bar', 'foo_bar#list');
     })
     
-    it('should compile route', function() {
+    it('should define route', function() {
       expect(app.map['get']).to.be.an('array');
       expect(app.map['get']).to.have.length(1);
     });
@@ -224,6 +226,39 @@ describe('Router#match', function() {
     });
   });
   
+  // TODO: Move this to path test
+  describe('shorthand notation with path preceeded by slash', function() {
+    var router, app;
+    
+    before(function() {
+      router = new Router(handler);
+      app = new MockApplication();
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+      
+      router.match('/songs/:title', 'songs#show');
+    })
+    
+    it('should define route', function() {
+      expect(app.map['get']).to.be.an('array');
+      expect(app.map['get']).to.have.length(1);
+    });
+    
+    it('should create route with path and handler', function() {
+      var route = app.map['get'][0];
+      expect(route.path).to.equal('/songs/:title');
+      expect(route.handler).to.be.a('function')
+    });
+    
+    it('should create handler for controller action', function() {
+      var route = app.map['get'][0]
+        , rv = route.handler();
+      expect(rv.controller).to.equal('songs');
+      expect(rv.action).to.equal('show');
+    });
+  });
+  
   describe('object notation', function() {
     var router, app;
     
@@ -237,7 +272,7 @@ describe('Router#match', function() {
       router.match('bands', { controller: 'bands', action: 'list' });
     })
     
-    it('should compile route', function() {
+    it('should define route', function() {
       expect(app.map['get']).to.be.an('array');
       expect(app.map['get']).to.have.length(1);
     });
@@ -269,7 +304,7 @@ describe('Router#match', function() {
       router.match('bands', { controller: 'bands', action: 'create', via: 'post' });
     })
     
-    it('should compile route', function() {
+    it('should define route', function() {
       expect(app.map['post']).to.be.an('array');
       expect(app.map['post']).to.have.length(1);
     });
@@ -285,6 +320,40 @@ describe('Router#match', function() {
         , rv = route.handler();
       expect(rv.controller).to.equal('bands');
       expect(rv.action).to.equal('create');
+    });
+  });
+  
+  describe('direct to function', function() {
+    var router, app;
+    
+    before(function() {
+      router = new Router(handler);
+      app = new MockApplication();
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+      
+      router.match('lyrics', function() {
+        return 'Hello, Function';
+      });
+    })
+    
+    it('should define route', function() {
+      expect(app.map['get']).to.be.an('array');
+      expect(app.map['get']).to.have.length(1);
+    });
+    
+    it('should create route with path and handler', function() {
+      var route = app.map['get'][0];
+      expect(route.path).to.equal('/lyrics');
+      expect(route.handler).to.be.an('array');
+      expect(route.handler).to.have.length(1);
+    });
+    
+    it('should create handler with function', function() {
+      var route = app.map['get'][0]
+        , rv = route.handler[0]();
+      expect(rv).to.equal('Hello, Function');
     });
   });
   

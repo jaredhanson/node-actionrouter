@@ -23,7 +23,7 @@ describe('Router#root', function() {
       router.root('pages#main');
     })
     
-    it('should compile route', function() {
+    it('should define route', function() {
       expect(app.map['get']).to.be.an('array');
       expect(app.map['get']).to.have.length(1);
     });
