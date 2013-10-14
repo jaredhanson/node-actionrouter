@@ -3,6 +3,7 @@ var MockRoute = require('./mockroute');
 
 function MockApplication() {
   this.map = {};
+  this.helpers = {};
 }
 
 MockApplication.prototype.get = function(path, handler) {
@@ -18,6 +19,10 @@ MockApplication.prototype.post = function(path, handler) {
 MockApplication.prototype.put = function(path, handler) {
   var route = new MockRoute(path, handler);
   (this.map['put'] = this.map['put'] || []).push(route);
+}
+
+MockApplication.prototype.helper = function(name, route) {
+  this.helpers[name] = route;
 }
 
 

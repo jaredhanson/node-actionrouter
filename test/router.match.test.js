@@ -574,6 +574,9 @@ describe('Router#match', function() {
       router.define(function(method, path, handler) {
         app[method](path, handler);
       });
+      router.assist(function(name, route) {
+        app.helper(name, route);
+      });
       
       router.match('songs', 'songs#list', { as: 'songs' });
     })
@@ -594,6 +597,15 @@ describe('Router#match', function() {
         , rv = route.handler();
       expect(rv.controller).to.equal('songs');
       expect(rv.action).to.equal('list');
+    });
+    
+    it('should declare helpers', function() {
+      var r = app.helpers['songs'];
+      
+      expect(r).to.be.an('object');
+      expect(r.pattern).to.equal('/songs');
+      expect(r.controller).to.equal('songs');
+      expect(r.action).to.equal('list');
     });
   });
   
