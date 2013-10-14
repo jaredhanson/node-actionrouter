@@ -565,4 +565,36 @@ describe('Router#match', function() {
     });
   });
   
+  describe('shorthand notation with declared helpers', function() {
+    var router, app;
+    
+    before(function() {
+      router = new Router(handler);
+      app = new MockApplication();
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+      
+      router.match('songs', 'songs#list', { as: 'songs' });
+    })
+    
+    it('should define route', function() {
+      expect(app.map['get']).to.be.an('array');
+      expect(app.map['get']).to.have.length(1);
+    });
+    
+    it('should create route with path and handler', function() {
+      var route = app.map['get'][0];
+      expect(route.path).to.equal('/songs');
+      expect(route.handler).to.be.a('function')
+    });
+    
+    it('should create handler for controller action', function() {
+      var route = app.map['get'][0]
+        , rv = route.handler();
+      expect(rv.controller).to.equal('songs');
+      expect(rv.action).to.equal('list');
+    });
+  });
+  
 });
