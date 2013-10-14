@@ -14,7 +14,10 @@ describe('utils', function() {
     });
     
     it('should normalize snake case path strings ending with controller', function() {
+      expect(utils.controllerize('foo_controller')).to.equal('foo');
+      expect(utils.controllerize('foo_bar_controller')).to.equal('fooBar');
       expect(utils.controllerize('foo_bar_baz_controller')).to.equal('fooBarBaz');
+      expect(utils.controllerize('fulano/foo_controller')).to.equal('fulano/foo');
     });
     
     it('should normalize lower camel case path strings', function() {
@@ -26,7 +29,10 @@ describe('utils', function() {
     });
     
     it('should normalize lower camel case path strings ending with controller', function() {
+      expect(utils.controllerize('fooController')).to.equal('foo');
+      expect(utils.controllerize('fooBarController')).to.equal('fooBar');
       expect(utils.controllerize('fooBarBazController')).to.equal('fooBarBaz');
+      expect(utils.controllerize('fulano/fooController')).to.equal('fulano/foo');
     });
     
     it('should normalize upper camel case path strings', function() {
@@ -38,17 +44,25 @@ describe('utils', function() {
     });
     
     it('should normalize upper camel case path strings ending with controller', function() {
-      expect(utils.controllerize('FooBarBazController')).to.equal('fooBarBaz');
-    });
-    
-    it('should normalize Ruby namespace strings', function() {
       expect(utils.controllerize('FooController')).to.equal('foo');
       expect(utils.controllerize('FooBarController')).to.equal('fooBar');
       expect(utils.controllerize('FooBarBazController')).to.equal('fooBarBaz');
-      expect(utils.controllerize('Bar::FooController')).to.equal('bar/foo');
-      expect(utils.controllerize('FulanoSutano::FooBarController')).to.equal('fulanoSutano/fooBar');
-      expect(utils.controllerize('Baz::Bar::FooController')).to.equal('baz/bar/foo');
-      expect(utils.controllerize('HogePage::FulanoSutano::FooBarController')).to.equal('hogePage/fulanoSutano/fooBar');
+      expect(utils.controllerize('Fulano/FooController')).to.equal('fulano/foo');
+    });
+    
+    it('should normalize Ruby namespace strings', function() {
+      expect(utils.controllerize('FooBarBaz')).to.equal('fooBarBaz');
+      expect(utils.controllerize('Fulano::Foo')).to.equal('fulano/foo');
+      expect(utils.controllerize('FulanoSutano::FooBar')).to.equal('fulanoSutano/fooBar');
+      expect(utils.controllerize('Hoge::Fulano::Foo')).to.equal('hoge/fulano/foo');
+      expect(utils.controllerize('HogePage::FulanoSutano::FooBar')).to.equal('hogePage/fulanoSutano/fooBar');
+    });
+    
+    it('should normalize Ruby namespace strings ending with controller', function() {
+      expect(utils.controllerize('FooController')).to.equal('foo');
+      expect(utils.controllerize('FooBarController')).to.equal('fooBar');
+      expect(utils.controllerize('FooBarBazController')).to.equal('fooBarBaz');
+      expect(utils.controllerize('Fulano::FooController')).to.equal('fulano/foo');
     });
   
     it('should return undefined if called without an argument', function() {
