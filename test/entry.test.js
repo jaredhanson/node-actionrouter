@@ -127,4 +127,52 @@ describe('Entry', function() {
     });
   });
   
+  describe('with optional placeholder preceded by dot', function() {
+    var e = new Entry('products', 'index', '/products.:format?');
+    
+    it('should have pattern property', function() {
+      expect(e.pattern).to.equal('/products.:format?');
+    });
+    
+    it('should have keys property', function() {
+      expect(e.keys).to.be.an('array');
+      expect(e.keys).to.have.length(1);
+      expect(e.keys[0].name).to.equal('format');
+      expect(e.keys[0].optional).to.be.true;
+    });
+    
+    it('should build path without value for placeholder', function() {
+      expect(e.path()).to.equal('/products');
+      expect(e.path({})).to.equal('/products');
+    });
+    
+    it('should build path with value for placeholder', function() {
+      expect(e.path({ format: 'json' })).to.equal('/products.json');
+    });
+  });
+  
+  describe('with optional placeholder preceded by slash', function() {
+    var e = new Entry('service', 'control', '/service/:op?');
+    
+    it('should have pattern property', function() {
+      expect(e.pattern).to.equal('/service/:op?');
+    });
+    
+    it('should have keys property', function() {
+      expect(e.keys).to.be.an('array');
+      expect(e.keys).to.have.length(1);
+      expect(e.keys[0].name).to.equal('op');
+      expect(e.keys[0].optional).to.be.true;
+    });
+    
+    it('should build path without value for placeholder', function() {
+      expect(e.path()).to.equal('/service');
+      expect(e.path({})).to.equal('/service');
+    });
+    
+    it('should build path with value for placeholder', function() {
+      expect(e.path({ op: 'stop' })).to.equal('/service/stop');
+    });
+  });
+  
 });
