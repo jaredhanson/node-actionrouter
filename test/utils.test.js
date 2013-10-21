@@ -93,6 +93,43 @@ describe('utils', function() {
   });
   
   
+  describe('#helperize', function() {
+    
+    it('should normalize common strings', function() {
+      expect(utils.helperize('foo')).to.equal('foo');
+      expect(utils.helperize('foo', 'Path')).to.equal('fooPath');
+      expect(utils.helperize('foo', 'URL')).to.equal('fooURL');
+      expect(utils.helperize('edit', 'foo', 'path')).to.equal('editFooPath');
+    });
+    
+    it('should normalize snake case strings', function() {
+      expect(utils.helperize('foo_bar')).to.equal('fooBar');
+      expect(utils.helperize('foo_bar', 'Path')).to.equal('fooBarPath');
+      expect(utils.helperize('foo_bar', 'URL')).to.equal('fooBarURL');
+      expect(utils.helperize('edit', 'foo_bar', 'path')).to.equal('editFooBarPath');
+    });
+    
+    it('should normalize lower camel case strings', function() {
+      expect(utils.helperize('fooBar')).to.equal('fooBar');
+      expect(utils.helperize('fooBar', 'Path')).to.equal('fooBarPath');
+      expect(utils.helperize('fooBar', 'URL')).to.equal('fooBarURL');
+      expect(utils.helperize('edit', 'fooBar', 'path')).to.equal('editFooBarPath');
+    });
+    
+    it('should normalize upper camel case strings', function() {
+      expect(utils.helperize('FooBar')).to.equal('fooBar');
+      expect(utils.helperize('FooBar', 'Path')).to.equal('fooBarPath');
+      expect(utils.helperize('FooBar', 'URL')).to.equal('fooBarURL');
+      expect(utils.helperize('Edit', 'FooBar', 'Path')).to.equal('editFooBarPath');
+    });
+    
+    it('should return undefined if called without an argument', function() {
+      expect(utils.helperize()).to.be.undefined;
+    });
+    
+  });
+  
+  
   describe('#moduleize', function() {
     
     it('should normalize snake case path strings', function() {
