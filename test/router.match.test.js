@@ -139,6 +139,64 @@ describe('Router#match', function() {
     });
   });
   
+  describe('object notation', function() {
+    var app, router;
+    
+    before(function() {
+      app = new MockApplication();
+      router = new Router(handler);
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+      
+      router.match('bands', { controller: 'bands', action: 'list' });
+    })
+    
+    it('should define application routes', function() {
+      expect(app.map['get']).to.be.an('array');
+      expect(app.map['get']).to.have.length(1);
+    });
+    
+    it('should create route to controller action', function() {
+      var route = app.map['get'][0];
+      expect(route.path).to.equal('/bands');
+      expect(route.handler).to.be.a('function');
+      
+      var rv = route.handler();
+      expect(rv.controller).to.equal('bands');
+      expect(rv.action).to.equal('list');
+    });
+  });
+  
+  describe('object notation and via option', function() {
+    var app, router;
+    
+    before(function() {
+      app = new MockApplication();
+      router = new Router(handler);
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+      
+      router.match('bands', { controller: 'bands', action: 'create', via: 'post' });
+    })
+    
+    it('should define application routes', function() {
+      expect(app.map['post']).to.be.an('array');
+      expect(app.map['post']).to.have.length(1);
+    });
+    
+    it('should create route to controller action', function() {
+      var route = app.map['post'][0];
+      expect(route.path).to.equal('/bands');
+      expect(route.handler).to.be.a('function');
+      
+      var rv = route.handler();
+      expect(rv.controller).to.equal('bands');
+      expect(rv.action).to.equal('create');
+    });
+  });
+  
   // TODO: Move this to path test
   describe('shorthand notation with underscored path to underscored controller', function() {
     var router, app;
@@ -235,70 +293,6 @@ describe('Router#match', function() {
         , rv = route.handler();
       expect(rv.controller).to.equal('songs');
       expect(rv.action).to.equal('show');
-    });
-  });
-  
-  describe('object notation', function() {
-    var router, app;
-    
-    before(function() {
-      router = new Router(handler);
-      app = new MockApplication();
-      router.define(function(method, path, handler) {
-        app[method](path, handler);
-      });
-      
-      router.match('bands', { controller: 'bands', action: 'list' });
-    })
-    
-    it('should define route', function() {
-      expect(app.map['get']).to.be.an('array');
-      expect(app.map['get']).to.have.length(1);
-    });
-    
-    it('should create route with path and handler', function() {
-      var route = app.map['get'][0];
-      expect(route.path).to.equal('/bands');
-      expect(route.handler).to.be.a('function')
-    });
-    
-    it('should create handler for controller action', function() {
-      var route = app.map['get'][0]
-        , rv = route.handler();
-      expect(rv.controller).to.equal('bands');
-      expect(rv.action).to.equal('list');
-    });
-  });
-  
-  describe('object notation and via option', function() {
-    var router, app;
-    
-    before(function() {
-      router = new Router(handler);
-      app = new MockApplication();
-      router.define(function(method, path, handler) {
-        app[method](path, handler);
-      });
-      
-      router.match('bands', { controller: 'bands', action: 'create', via: 'post' });
-    })
-    
-    it('should define route', function() {
-      expect(app.map['post']).to.be.an('array');
-      expect(app.map['post']).to.have.length(1);
-    });
-    
-    it('should create route with path and handler', function() {
-      var route = app.map['post'][0];
-      expect(route.path).to.equal('/bands');
-      expect(route.handler).to.be.a('function')
-    });
-    
-    it('should create handler for controller action', function() {
-      var route = app.map['post'][0]
-        , rv = route.handler();
-      expect(rv.controller).to.equal('bands');
-      expect(rv.action).to.equal('create');
     });
   });
   
