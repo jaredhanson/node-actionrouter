@@ -139,6 +139,47 @@ describe('Router#match', function() {
     });
   });
   
+  describe('shorthand notation with routing helper', function() {
+    var app, router;
+    
+    before(function() {
+      app = new MockApplication();
+      router = new Router(handler);
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+      router.assist(function(name, entry) {
+        app.helper(name, entry);
+      });
+      
+      router.match('songs', 'songs#list', { as: 'songs' });
+    })
+    
+    it('should define application routes', function() {
+      expect(app.map['get']).to.be.an('array');
+      expect(app.map['get']).to.have.length(1);
+    });
+    
+    it('should create route to controller action', function() {
+      var route = app.map['get'][0];
+      expect(route.path).to.equal('/songs');
+      expect(route.handler).to.be.a('function');
+      
+      var rv = route.handler();
+      expect(rv.controller).to.equal('songs');
+      expect(rv.action).to.equal('list');
+    });
+    
+    it('should register helper for route', function() {
+      var entry = app.helpers['songs'];
+      
+      expect(entry).to.be.an('object');
+      expect(entry.controller).to.equal('songs');
+      expect(entry.action).to.equal('list');
+      expect(entry.pattern).to.equal('/songs');
+    });
+  });
+  
   describe('object notation', function() {
     var app, router;
     
@@ -535,50 +576,6 @@ describe('Router#match', function() {
       expect(rv).to.equal('Hello, 1');
       rv = route.handler[1]();
       expect(rv).to.equal('Hello, 2');
-    });
-  });
-  
-  describe('shorthand notation with declared helpers', function() {
-    var router, app;
-    
-    before(function() {
-      router = new Router(handler);
-      app = new MockApplication();
-      router.define(function(method, path, handler) {
-        app[method](path, handler);
-      });
-      router.assist(function(name, route) {
-        app.helper(name, route);
-      });
-      
-      router.match('songs', 'songs#list', { as: 'songs' });
-    })
-    
-    it('should define route', function() {
-      expect(app.map['get']).to.be.an('array');
-      expect(app.map['get']).to.have.length(1);
-    });
-    
-    it('should create route with path and handler', function() {
-      var route = app.map['get'][0];
-      expect(route.path).to.equal('/songs');
-      expect(route.handler).to.be.a('function')
-    });
-    
-    it('should create handler for controller action', function() {
-      var route = app.map['get'][0]
-        , rv = route.handler();
-      expect(rv.controller).to.equal('songs');
-      expect(rv.action).to.equal('list');
-    });
-    
-    it('should declare helpers', function() {
-      var r = app.helpers['songs'];
-      
-      expect(r).to.be.an('object');
-      expect(r.pattern).to.equal('/songs');
-      expect(r.controller).to.equal('songs');
-      expect(r.action).to.equal('list');
     });
   });
   

@@ -21,8 +21,8 @@ MockApplication.prototype.put = function(path, handler) {
   (this.map['put'] = this.map['put'] || []).push(route);
 }
 
-MockApplication.prototype.helper = function(name, route) {
-  this.helpers[name] = route;
+MockApplication.prototype.helper = function(name, entry) {
+  this.helpers[name] = entry;
 }
 
 
