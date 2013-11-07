@@ -2,7 +2,7 @@ var Router = require('../lib/router')
   , MockApplication = require('./mocks/mockapplication');
   
 
-describe('Router#resource', function() {
+describe('Router#resources', function() {
   
   function handler(controller, action) {
     return function() {
@@ -10,7 +10,7 @@ describe('Router#resource', function() {
     }
   }
   
-  describe('top-level resource', function() {
+  describe('top-level resources', function() {
     var app, router;
     
     before(function() {
@@ -23,13 +23,13 @@ describe('Router#resource', function() {
         app.helper(name, entry);
       });
       
-      router.resource('profile');
+      router.resources('bands');
     })
     
     it('should define application routes', function() {
       expect(Object.keys(app.map)).to.have.length(4);
       expect(app.map['get']).to.be.an('array');
-      expect(app.map['get']).to.have.length(3);
+      expect(app.map['get']).to.have.length(4);
       expect(app.map['post']).to.be.an('array');
       expect(app.map['post']).to.have.length(1);
       expect(app.map['put']).to.be.an('array');
@@ -38,94 +38,113 @@ describe('Router#resource', function() {
       expect(app.map['delete']).to.have.length(1);
     });
     
-    it('should create route to new action', function() {
+    it('should create route to index action', function() {
       var route = app.map['get'][0];
-      expect(route.path).to.equal('/profile/new.:format?');
+      expect(route.path).to.equal('/bands.:format?');
       expect(route.handler).to.be.a('function');
       
       var rv = route.handler();
-      expect(rv.controller).to.equal('profile');
+      expect(rv.controller).to.equal('bands');
+      expect(rv.action).to.equal('index');
+    });
+    
+    it('should create route to new action', function() {
+      var route = app.map['get'][1];
+      expect(route.path).to.equal('/bands/new.:format?');
+      expect(route.handler).to.be.a('function');
+      
+      var rv = route.handler();
+      expect(rv.controller).to.equal('bands');
       expect(rv.action).to.equal('new');
     });
     
     it('should create route to create action', function() {
       var route = app.map['post'][0];
-      expect(route.path).to.equal('/profile');
+      expect(route.path).to.equal('/bands');
       expect(route.handler).to.be.a('function');
       
       var rv = route.handler();
-      expect(rv.controller).to.equal('profile');
+      expect(rv.controller).to.equal('bands');
       expect(rv.action).to.equal('create');
     });
     
     it('should create route to show action', function() {
-      var route = app.map['get'][1];
-      expect(route.path).to.equal('/profile.:format?');
+      var route = app.map['get'][2];
+      expect(route.path).to.equal('/bands/:id.:format?');
       expect(route.handler).to.be.a('function');
       
       var rv = route.handler();
-      expect(rv.controller).to.equal('profile');
+      expect(rv.controller).to.equal('bands');
       expect(rv.action).to.equal('show');
     });
     
     it('should create route to edit action', function() {
-      var route = app.map['get'][2];
-      expect(route.path).to.equal('/profile/edit.:format?');
+      var route = app.map['get'][3];
+      expect(route.path).to.equal('/bands/:id/edit.:format?');
       expect(route.handler).to.be.a('function');
       
       var rv = route.handler();
-      expect(rv.controller).to.equal('profile');
+      expect(rv.controller).to.equal('bands');
       expect(rv.action).to.equal('edit');
     });
     
     it('should create route to update action', function() {
       var route = app.map['put'][0];
-      expect(route.path).to.equal('/profile');
+      expect(route.path).to.equal('/bands/:id');
       expect(route.handler).to.be.a('function');
       
       var rv = route.handler();
-      expect(rv.controller).to.equal('profile');
+      expect(rv.controller).to.equal('bands');
       expect(rv.action).to.equal('update');
     });
     
     it('should create route to destroy action', function() {
       var route = app.map['delete'][0];
-      expect(route.path).to.equal('/profile');
+      expect(route.path).to.equal('/bands/:id');
       expect(route.handler).to.be.a('function');
       
       var rv = route.handler();
-      expect(rv.controller).to.equal('profile');
+      expect(rv.controller).to.equal('bands');
       expect(rv.action).to.equal('destroy');
     });
     
     it('should define application helpers', function() {
-      expect(Object.keys(app.helpers)).to.have.length(3);
+      expect(Object.keys(app.helpers)).to.have.length(4);
+    });
+    
+    it('should register index helper for route', function() {
+      var entry = app.helpers['bands'];
+      
+      expect(entry).to.be.an('object');
+      expect(entry.pattern).to.equal('/bands.:format?');
+      expect(entry.controller).to.equal('bands');
+      expect(entry.action).to.equal('index');
     });
     
     it('should register show helper for route', function() {
-      var entry = app.helpers['profile'];
+      var entry = app.helpers['band'];
       
       expect(entry).to.be.an('object');
-      expect(entry.pattern).to.equal('/profile.:format?');
-      expect(entry.controller).to.equal('profile');
+      expect(entry.pattern).to.equal('/bands/:id.:format?');
+      expect(entry.controller).to.equal('bands');
       expect(entry.action).to.equal('show');
     });
     
     it('should register new helper for route', function() {
-      var entry = app.helpers['newProfile'];
+      var entry = app.helpers['newBand'];
       
       expect(entry).to.be.an('object');
-      expect(entry.pattern).to.equal('/profile/new.:format?');
-      expect(entry.controller).to.equal('profile');
+      expect(entry.pattern).to.equal('/bands/new.:format?');
+      expect(entry.controller).to.equal('bands');
       expect(entry.action).to.equal('new');
     });
     
     it('should register edit helper for route', function() {
-      var entry = app.helpers['editProfile'];
+      var entry = app.helpers['editBand'];
       
       expect(entry).to.be.an('object');
-      expect(entry.pattern).to.equal('/profile/edit.:format?');
-      expect(entry.controller).to.equal('profile');
+      expect(entry.pattern).to.equal('/bands/:id/edit.:format?');
+      expect(entry.controller).to.equal('bands');
       expect(entry.action).to.equal('edit');
     });
   });
