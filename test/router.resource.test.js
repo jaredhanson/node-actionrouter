@@ -130,6 +130,52 @@ describe('Router#resource', function() {
     });
   });
   
+  describe('top-level resource with only one action', function() {
+    var app, router;
+    
+    before(function() {
+      app = new MockApplication();
+      router = new Router(handler);
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+      router.assist(function(name, entry) {
+        app.helper(name, entry);
+      });
+      
+      router.resource('profile', { only: 'show' });
+    })
+    
+    it('should define application routes', function() {
+      expect(Object.keys(app.map)).to.have.length(1);
+      expect(app.map['get']).to.be.an('array');
+      expect(app.map['get']).to.have.length(1);
+    });
+    
+    it('should create route to show action', function() {
+      var route = app.map['get'][0];
+      expect(route.path).to.equal('/profile.:format?');
+      expect(route.handler).to.be.a('function');
+      
+      var rv = route.handler();
+      expect(rv.controller).to.equal('profile');
+      expect(rv.action).to.equal('show');
+    });
+    
+    it('should define application helpers', function() {
+      expect(Object.keys(app.helpers)).to.have.length(1);
+    });
+    
+    it('should register show helper for route', function() {
+      var entry = app.helpers['profile'];
+      
+      expect(entry).to.be.an('object');
+      expect(entry.pattern).to.equal('/profile.:format?');
+      expect(entry.controller).to.equal('profile');
+      expect(entry.action).to.equal('show');
+    });
+  });
+  
   describe('top-level resource with only some actions', function() {
     var app, router;
     
