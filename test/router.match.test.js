@@ -174,9 +174,9 @@ describe('Router#match', function() {
       var entry = app.helpers['songs'];
       
       expect(entry).to.be.an('object');
+      expect(entry.pattern).to.equal('/songs');
       expect(entry.controller).to.equal('songs');
       expect(entry.action).to.equal('list');
-      expect(entry.pattern).to.equal('/songs');
     });
   });
   
