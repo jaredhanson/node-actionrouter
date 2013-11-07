@@ -11,11 +11,11 @@ describe('Router#root', function() {
   }
   
   describe('shorthand notation', function() {
-    var router, app;
+    var app, router;
     
     before(function() {
-      router = new Router(handler);
       app = new MockApplication();
+      router = new Router(handler);
       router.define(function(method, path, handler) {
         app[method](path, handler);
       });
@@ -23,20 +23,17 @@ describe('Router#root', function() {
       router.root('pages#main');
     })
     
-    it('should define route', function() {
+    it('should define application routes', function() {
       expect(app.map['get']).to.be.an('array');
       expect(app.map['get']).to.have.length(1);
     });
     
-    it('should create route with path and handler', function() {
+    it('should create route to controller action', function() {
       var route = app.map['get'][0];
       expect(route.path).to.equal('/');
-      expect(route.handler).to.be.a('function')
-    });
-    
-    it('should create handler for controller action', function() {
-      var route = app.map['get'][0]
-        , rv = route.handler();
+      expect(route.handler).to.be.a('function');
+      
+      var rv = route.handler();
       expect(rv.controller).to.equal('pages');
       expect(rv.action).to.equal('main');
     });
