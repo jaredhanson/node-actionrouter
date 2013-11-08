@@ -291,4 +291,100 @@ describe('Router#resources', function() {
     });
   });
   
+  describe('top-level resources excepting some actions', function() {
+    var app, router;
+    
+    before(function() {
+      app = new MockApplication();
+      router = new Router(handler);
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+      router.assist(function(name, entry) {
+        app.helper(name, entry);
+      });
+      
+      router.resources('bands',  { except: [ 'new', 'create', 'destroy' ] });
+    })
+    
+    it('should define application routes', function() {
+      expect(Object.keys(app.map)).to.have.length(2);
+      expect(app.map['get']).to.be.an('array');
+      expect(app.map['get']).to.have.length(3);
+      expect(app.map['put']).to.be.an('array');
+      expect(app.map['put']).to.have.length(1);
+    });
+    
+    it('should create route to index action', function() {
+      var route = app.map['get'][0];
+      expect(route.path).to.equal('/bands.:format?');
+      expect(route.handler).to.be.a('function');
+      
+      var rv = route.handler();
+      expect(rv.controller).to.equal('bands');
+      expect(rv.action).to.equal('index');
+    });
+    
+    it('should create route to show action', function() {
+      var route = app.map['get'][1];
+      expect(route.path).to.equal('/bands/:id.:format?');
+      expect(route.handler).to.be.a('function');
+      
+      var rv = route.handler();
+      expect(rv.controller).to.equal('bands');
+      expect(rv.action).to.equal('show');
+    });
+    
+    it('should create route to edit action', function() {
+      var route = app.map['get'][2];
+      expect(route.path).to.equal('/bands/:id/edit.:format?');
+      expect(route.handler).to.be.a('function');
+      
+      var rv = route.handler();
+      expect(rv.controller).to.equal('bands');
+      expect(rv.action).to.equal('edit');
+    });
+    
+    it('should create route to update action', function() {
+      var route = app.map['put'][0];
+      expect(route.path).to.equal('/bands/:id');
+      expect(route.handler).to.be.a('function');
+      
+      var rv = route.handler();
+      expect(rv.controller).to.equal('bands');
+      expect(rv.action).to.equal('update');
+    });
+    
+    it('should define application helpers', function() {
+      expect(Object.keys(app.helpers)).to.have.length(3);
+    });
+    
+    it('should register index helper for route', function() {
+      var entry = app.helpers['bands'];
+      
+      expect(entry).to.be.an('object');
+      expect(entry.pattern).to.equal('/bands.:format?');
+      expect(entry.controller).to.equal('bands');
+      expect(entry.action).to.equal('index');
+    });
+    
+    it('should register show helper for route', function() {
+      var entry = app.helpers['band'];
+      
+      expect(entry).to.be.an('object');
+      expect(entry.pattern).to.equal('/bands/:id.:format?');
+      expect(entry.controller).to.equal('bands');
+      expect(entry.action).to.equal('show');
+    });
+    
+    it('should register edit helper for route', function() {
+      var entry = app.helpers['editBand'];
+      
+      expect(entry).to.be.an('object');
+      expect(entry.pattern).to.equal('/bands/:id/edit.:format?');
+      expect(entry.controller).to.equal('bands');
+      expect(entry.action).to.equal('edit');
+    });
+  });
+  
 });
