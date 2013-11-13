@@ -10,7 +10,7 @@ describe('Router#namespace', function() {
     }
   }
 
-  describe('namespace with root route', function() {
+  describe('namespace with match route', function() {
     var app, router;
     
     before(function() {
@@ -19,9 +19,12 @@ describe('Router#namespace', function() {
       router.define(function(method, path, handler) {
         app[method](path, handler);
       });
+      router.assist(function(name, entry) {
+        app.helper(name, entry);
+      });
       
       router.namespace('top40', function() {
-        router.root('pages#main');
+        router.match('songs/:title', 'songs#show', { as: 'songs' });
       });
     })
     
@@ -32,12 +35,21 @@ describe('Router#namespace', function() {
     
     it('should create route to controller action', function() {
       var route = app.map['get'][0];
-      expect(route.path).to.equal('/top40');
+      expect(route.path).to.equal('/top40/songs/:title');
       expect(route.handler).to.be.a('function');
       
       var rv = route.handler();
-      expect(rv.controller).to.equal('top40/pages');
-      expect(rv.action).to.equal('main');
+      expect(rv.controller).to.equal('top40/songs');
+      expect(rv.action).to.equal('show');
+    });
+    
+    it('should register helper for route', function() {
+      var entry = app.helpers['songs'];
+      
+      expect(entry).to.be.an('object');
+      expect(entry.pattern).to.equal('/top40/songs/:title');
+      expect(entry.controller).to.equal('top40/songs');
+      expect(entry.action).to.equal('show');
     });
   });
 
