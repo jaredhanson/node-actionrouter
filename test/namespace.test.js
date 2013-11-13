@@ -6,33 +6,34 @@ describe('Namespace', function() {
   describe('constructed with no arguments', function() {
     var ns = new Namespace();
     
-    it('should have empty path property', function() {
-      expect(ns.path).to.equal('');
+    it('should have empty name property', function() {
+      expect(ns.name).to.equal('');
     });
     
     it('should have empty module property', function() {
       expect(ns.module).to.equal('');
     });
     
-    it('should have empty helper property', function() {
-      expect(ns.helper).to.equal('');
+    it('should have empty method property', function() {
+      expect(ns.method).to.equal('');
     });
     
     it('should not have parent', function() {
       expect(ns.parent).to.be.null;
     });
     
-    it('should qualify controller', function() {
-      expect(ns.qcontroller('PhotosController')).to.equal('photos');
-    });
-    
-    it('should qualify helpers', function() {
-      expect(ns.qhelper('photos')).to.equal('photos');
-    });
-    
     it('should qualify paths', function() {
       expect(ns.qpath('photos')).to.equal('/photos');
       expect(ns.qpath('/photos')).to.equal('/photos');
+      expect(ns.qpath('/photos/')).to.equal('/photos/');
+    });
+    
+    it('should qualify controller', function() {
+      expect(ns.qmodule('PhotosController')).to.equal('photos');
+    });
+    
+    it('should qualify helpers', function() {
+      expect(ns.qfunction('photos')).to.equal('photos');
     });
   });
   
@@ -40,7 +41,7 @@ describe('Namespace', function() {
     var ns = new Namespace('foo');
     
     it('should have path property', function() {
-      expect(ns.path).to.equal('foo');
+      expect(ns.name).to.equal('foo');
     });
     
     it('should have module property', function() {
@@ -48,7 +49,7 @@ describe('Namespace', function() {
     });
     
     it('should have helper property', function() {
-      expect(ns.helper).to.equal('foo');
+      expect(ns.method).to.equal('foo');
     });
     
     it('should not have parent', function() {
@@ -56,11 +57,11 @@ describe('Namespace', function() {
     });
     
     it('should qualify controller', function() {
-      expect(ns.qcontroller('PhotosController')).to.equal('foo/photos');
+      expect(ns.qmodule('PhotosController')).to.equal('foo/photos');
     });
     
     it('should qualify helpers', function() {
-      expect(ns.qhelper('photos')).to.equal('fooPhotos');
+      expect(ns.qfunction('photos')).to.equal('fooPhotos');
     });
     
     it('should qualify paths', function() {
@@ -73,7 +74,7 @@ describe('Namespace', function() {
     var ns = new Namespace('foo', { module: 'Bar' });
     
     it('should have path property', function() {
-      expect(ns.path).to.equal('foo');
+      expect(ns.name).to.equal('foo');
     });
     
     it('should have module property', function() {
@@ -81,7 +82,7 @@ describe('Namespace', function() {
     });
     
     it('should have helper property', function() {
-      expect(ns.helper).to.equal('foo');
+      expect(ns.method).to.equal('foo');
     });
     
     it('should not have parent', function() {
@@ -89,11 +90,11 @@ describe('Namespace', function() {
     });
     
     it('should qualify controller', function() {
-      expect(ns.qcontroller('PhotosController')).to.equal('bar/photos');
+      expect(ns.qmodule('PhotosController')).to.equal('bar/photos');
     });
     
     it('should qualify helpers', function() {
-      expect(ns.qhelper('photos')).to.equal('fooPhotos');
+      expect(ns.qfunction('photos')).to.equal('fooPhotos');
     });
     
     it('should qualify paths', function() {
@@ -103,10 +104,10 @@ describe('Namespace', function() {
   });
   
   describe('constructed with name and helper option', function() {
-    var ns = new Namespace('foo', { helper: 'bar' });
+    var ns = new Namespace('foo', { method: 'bar' });
     
     it('should have path property', function() {
-      expect(ns.path).to.equal('foo');
+      expect(ns.name).to.equal('foo');
     });
     
     it('should have module property', function() {
@@ -114,7 +115,7 @@ describe('Namespace', function() {
     });
     
     it('should have helper property', function() {
-      expect(ns.helper).to.equal('bar');
+      expect(ns.method).to.equal('bar');
     });
     
     it('should not have parent', function() {
@@ -122,11 +123,11 @@ describe('Namespace', function() {
     });
     
     it('should qualify controller', function() {
-      expect(ns.qcontroller('PhotosController')).to.equal('foo/photos');
+      expect(ns.qmodule('PhotosController')).to.equal('foo/photos');
     });
     
     it('should qualify helpers', function() {
-      expect(ns.qhelper('photos')).to.equal('barPhotos');
+      expect(ns.qfunction('photos')).to.equal('barPhotos');
     });
     
     it('should qualify paths', function() {
@@ -139,7 +140,7 @@ describe('Namespace', function() {
     var ns = new Namespace('foo', { module: null });
     
     it('should have path property', function() {
-      expect(ns.path).to.equal('foo');
+      expect(ns.name).to.equal('foo');
     });
     
     it('should have empty module property', function() {
@@ -147,7 +148,7 @@ describe('Namespace', function() {
     });
     
     it('should have helper property', function() {
-      expect(ns.helper).to.equal('foo');
+      expect(ns.method).to.equal('foo');
     });
     
     it('should not have parent', function() {
@@ -155,11 +156,11 @@ describe('Namespace', function() {
     });
     
     it('should qualify controller', function() {
-      expect(ns.qcontroller('PhotosController')).to.equal('photos');
+      expect(ns.qmodule('PhotosController')).to.equal('photos');
     });
     
     it('should qualify helpers', function() {
-      expect(ns.qhelper('photos')).to.equal('fooPhotos');
+      expect(ns.qfunction('photos')).to.equal('fooPhotos');
     });
     
     it('should qualify paths', function() {
@@ -173,7 +174,7 @@ describe('Namespace', function() {
     var ns = new Namespace('http', {}, parent);
     
     it('should have path property', function() {
-      expect(ns.path).to.equal('http');
+      expect(ns.name).to.equal('http');
     });
     
     it('should have module property', function() {
@@ -181,7 +182,7 @@ describe('Namespace', function() {
     });
     
     it('should have helper property', function() {
-      expect(ns.helper).to.equal('http');
+      expect(ns.method).to.equal('http');
     });
     
     it('should not have parent', function() {
@@ -189,11 +190,11 @@ describe('Namespace', function() {
     });
     
     it('should qualify controller', function() {
-      expect(ns.qcontroller('ProxiesController')).to.equal('net/http/proxies');
+      expect(ns.qmodule('ProxiesController')).to.equal('net/http/proxies');
     });
     
     it('should qualify helpers', function() {
-      expect(ns.qhelper('proxies')).to.equal('netHttpProxies');
+      expect(ns.qfunction('proxies')).to.equal('netHttpProxies');
     });
     
     it('should qualify paths', function() {
