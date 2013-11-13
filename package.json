@@ -30,6 +30,7 @@
   ],
   "main": "./lib",
   "dependencies": {
+    "methods": "0.1.x",
     "i": "0.3.x",
     "utils-flatten": "1.x.x",
     "debug": "0.7.x"
