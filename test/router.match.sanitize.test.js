@@ -157,4 +157,45 @@ describe('Router#match', function() {
     });
   });
   
+  describe('shorthand notation with snake case action and helper', function() {
+    var router, app;
+    
+    before(function() {
+      router = new Router(handler);
+      app = new MockApplication();
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+      router.assist(function(name, entry) {
+        app.helper(name, entry);
+      });
+      
+      router.match('r2-d2', 'robots#beep_boop', { as: 'make_noise' });
+    });
+    
+    it('should define application routes', function() {
+      expect(app.map['get']).to.be.an('array');
+      expect(app.map['get']).to.have.length(1);
+    });
+    
+    it('should create route to controller action', function() {
+      var route = app.map['get'][0];
+      expect(route.path).to.equal('/r2-d2');
+      expect(route.handler).to.be.a('function');
+      
+      var rv = route.handler();
+      expect(rv.controller).to.equal('robots');
+      expect(rv.action).to.equal('beepBoop');
+    });
+    
+    it('should register helper for route', function() {
+      var entry = app.helpers['makeNoise'];
+      
+      expect(entry).to.be.an('object');
+      expect(entry.pattern).to.equal('/r2-d2');
+      expect(entry.controller).to.equal('robots');
+      expect(entry.action).to.equal('beepBoop');
+    });
+  });
+  
 });
