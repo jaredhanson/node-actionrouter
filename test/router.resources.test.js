@@ -1,3 +1,5 @@
+/* global describe, it, before, expect */
+
 var Router = require('../lib/router')
   , MockApplication = require('./mocks/mockapplication');
   
@@ -7,7 +9,7 @@ describe('Router#resources', function() {
   function handler(controller, action) {
     return function() {
       return { controller: controller, action: action };
-    }
+    };
   }
   
   describe('top-level resources', function() {
@@ -24,7 +26,7 @@ describe('Router#resources', function() {
       });
       
       router.resources('bands');
-    })
+    });
     
     it('should define application routes', function() {
       expect(Object.keys(app.map)).to.have.length(4);
@@ -113,7 +115,7 @@ describe('Router#resources', function() {
     });
     
     it('should register index helper for route', function() {
-      var entry = app.helpers['bands'];
+      var entry = app.helpers.bands;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/bands.:format?');
@@ -122,7 +124,7 @@ describe('Router#resources', function() {
     });
     
     it('should register show helper for route', function() {
-      var entry = app.helpers['band'];
+      var entry = app.helpers.band;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/bands/:id.:format?');
@@ -131,7 +133,7 @@ describe('Router#resources', function() {
     });
     
     it('should register new helper for route', function() {
-      var entry = app.helpers['newBand'];
+      var entry = app.helpers.newBand;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/bands/new.:format?');
@@ -140,7 +142,7 @@ describe('Router#resources', function() {
     });
     
     it('should register edit helper for route', function() {
-      var entry = app.helpers['editBand'];
+      var entry = app.helpers.editBand;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/bands/:id/edit.:format?');
@@ -163,7 +165,7 @@ describe('Router#resources', function() {
       });
       
       router.resources('bands', { only: 'show' });
-    })
+    });
     
     it('should define application routes', function() {
       expect(Object.keys(app.map)).to.have.length(1);
@@ -186,7 +188,7 @@ describe('Router#resources', function() {
     });
     
     it('should register show helper for route', function() {
-      var entry = app.helpers['band'];
+      var entry = app.helpers.band;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/bands/:id.:format?');
@@ -209,7 +211,7 @@ describe('Router#resources', function() {
       });
       
       router.resources('bands', { only: [ 'index', 'show', 'edit', 'update' ] });
-    })
+    });
     
     it('should define application routes', function() {
       expect(Object.keys(app.map)).to.have.length(2);
@@ -264,7 +266,7 @@ describe('Router#resources', function() {
     });
     
     it('should register index helper for route', function() {
-      var entry = app.helpers['bands'];
+      var entry = app.helpers.bands;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/bands.:format?');
@@ -273,7 +275,7 @@ describe('Router#resources', function() {
     });
     
     it('should register show helper for route', function() {
-      var entry = app.helpers['band'];
+      var entry = app.helpers.band;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/bands/:id.:format?');
@@ -282,7 +284,7 @@ describe('Router#resources', function() {
     });
     
     it('should register edit helper for route', function() {
-      var entry = app.helpers['editBand'];
+      var entry = app.helpers.editBand;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/bands/:id/edit.:format?');
@@ -305,7 +307,7 @@ describe('Router#resources', function() {
       });
       
       router.resources('bands', { except: 'destroy' });
-    })
+    });
     
     it('should define application routes', function() {
       expect(Object.keys(app.map)).to.have.length(3);
@@ -382,7 +384,7 @@ describe('Router#resources', function() {
     });
     
     it('should register index helper for route', function() {
-      var entry = app.helpers['bands'];
+      var entry = app.helpers.bands;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/bands.:format?');
@@ -391,7 +393,7 @@ describe('Router#resources', function() {
     });
     
     it('should register show helper for route', function() {
-      var entry = app.helpers['band'];
+      var entry = app.helpers.band;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/bands/:id.:format?');
@@ -400,7 +402,7 @@ describe('Router#resources', function() {
     });
     
     it('should register new helper for route', function() {
-      var entry = app.helpers['newBand'];
+      var entry = app.helpers.newBand;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/bands/new.:format?');
@@ -409,7 +411,7 @@ describe('Router#resources', function() {
     });
     
     it('should register edit helper for route', function() {
-      var entry = app.helpers['editBand'];
+      var entry = app.helpers.editBand;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/bands/:id/edit.:format?');
@@ -432,7 +434,7 @@ describe('Router#resources', function() {
       });
       
       router.resources('bands',  { except: [ 'new', 'create', 'destroy' ] });
-    })
+    });
     
     it('should define application routes', function() {
       expect(Object.keys(app.map)).to.have.length(2);
@@ -487,7 +489,7 @@ describe('Router#resources', function() {
     });
     
     it('should register index helper for route', function() {
-      var entry = app.helpers['bands'];
+      var entry = app.helpers.bands;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/bands.:format?');
@@ -496,7 +498,7 @@ describe('Router#resources', function() {
     });
     
     it('should register show helper for route', function() {
-      var entry = app.helpers['band'];
+      var entry = app.helpers.band;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/bands/:id.:format?');
@@ -505,7 +507,7 @@ describe('Router#resources', function() {
     });
     
     it('should register edit helper for route', function() {
-      var entry = app.helpers['editBand'];
+      var entry = app.helpers.editBand;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/bands/:id/edit.:format?');

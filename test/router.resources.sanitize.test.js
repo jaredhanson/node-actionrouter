@@ -1,3 +1,5 @@
+/* global describe, it, before, expect */
+
 var Router = require('../lib/router')
   , MockApplication = require('./mocks/mockapplication');
   
@@ -7,7 +9,7 @@ describe('Router#resources', function() {
   function handler(controller, action) {
     return function() {
       return { controller: controller, action: action };
-    }
+    };
   }
   
   describe('top-level resources with underscored name', function() {
@@ -24,7 +26,7 @@ describe('Router#resources', function() {
       });
       
       router.resources('foo_bars');
-    })
+    });
     
     it('should define application routes', function() {
       expect(Object.keys(app.map)).to.have.length(4);
@@ -113,7 +115,7 @@ describe('Router#resources', function() {
     });
     
     it('should register index helper for route', function() {
-      var entry = app.helpers['fooBars'];
+      var entry = app.helpers.fooBars;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/foo_bars.:format?');
@@ -122,7 +124,7 @@ describe('Router#resources', function() {
     });
     
     it('should register show helper for route', function() {
-      var entry = app.helpers['fooBar'];
+      var entry = app.helpers.fooBar;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/foo_bars/:id.:format?');
@@ -131,7 +133,7 @@ describe('Router#resources', function() {
     });
     
     it('should register new helper for route', function() {
-      var entry = app.helpers['newFooBar'];
+      var entry = app.helpers.newFooBar;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/foo_bars/new.:format?');
@@ -140,7 +142,7 @@ describe('Router#resources', function() {
     });
     
     it('should register edit helper for route', function() {
-      var entry = app.helpers['editFooBar'];
+      var entry = app.helpers.editFooBar;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/foo_bars/:id/edit.:format?');
@@ -163,7 +165,7 @@ describe('Router#resources', function() {
       });
       
       router.resources('foo-bars');
-    })
+    });
     
     it('should define application routes', function() {
       expect(Object.keys(app.map)).to.have.length(4);
@@ -252,7 +254,7 @@ describe('Router#resources', function() {
     });
     
     it('should register index helper for route', function() {
-      var entry = app.helpers['fooBars'];
+      var entry = app.helpers.fooBars;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/foo-bars.:format?');
@@ -261,7 +263,7 @@ describe('Router#resources', function() {
     });
     
     it('should register show helper for route', function() {
-      var entry = app.helpers['fooBar'];
+      var entry = app.helpers.fooBar;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/foo-bars/:id.:format?');
@@ -270,7 +272,7 @@ describe('Router#resources', function() {
     });
     
     it('should register new helper for route', function() {
-      var entry = app.helpers['newFooBar'];
+      var entry = app.helpers.newFooBar;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/foo-bars/new.:format?');
@@ -279,7 +281,7 @@ describe('Router#resources', function() {
     });
     
     it('should register edit helper for route', function() {
-      var entry = app.helpers['editFooBar'];
+      var entry = app.helpers.editFooBar;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/foo-bars/:id/edit.:format?');
