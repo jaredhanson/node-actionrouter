@@ -1,3 +1,5 @@
+/* global describe, it, expect */
+
 var Entry = require('../lib/entry');
   
 
@@ -58,13 +60,13 @@ describe('Entry', function() {
     
     it('should throw when building path and missing placeholder options', function() {
       expect(function() {
-        e.path()
+        e.path();
       }).to.throw('Unable to substitute value for ":id" in URL pattern "/user/:id"');
     });
     
     it('should throw when building path and missing placeholder value', function() {
       expect(function() {
-        e.path({ foo: 'bar' })
+        e.path({ foo: 'bar' });
       }).to.throw('Unable to substitute value for ":id" in URL pattern "/user/:id"');
     });
   });
