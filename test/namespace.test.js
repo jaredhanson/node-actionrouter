@@ -1,3 +1,5 @@
+/* global describe, it, expect */
+
 var Namespace = require('../lib/namespace');
   
 
