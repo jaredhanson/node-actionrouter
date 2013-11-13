@@ -1,7 +1,6 @@
 /* global describe, it, expect */
 
-var Router = require('../lib/router')
-  , MockApplication = require('./mocks/mockapplication');
+var Router = require('../lib/router');
   
 
 describe('Router#verb', function() {
