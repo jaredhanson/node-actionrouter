@@ -1,3 +1,5 @@
+/* global describe, it, before, expect */
+
 var Router = require('../lib/router')
   , MockApplication = require('./mocks/mockapplication');
   
@@ -7,7 +9,7 @@ describe('Router#match', function() {
   function handler(controller, action) {
     return function() {
       return { controller: controller, action: action };
-    }
+    };
   }
   
   describe('shorthand notation', function() {
@@ -21,7 +23,7 @@ describe('Router#match', function() {
       });
       
       router.match('songs/:title', 'songs#show');
-    })
+    });
     
     it('should define application routes', function() {
       expect(app.map['get']).to.be.an('array');
@@ -50,7 +52,7 @@ describe('Router#match', function() {
       });
       
       router.match('bands', 'bands#create', { via: 'post' });
-    })
+    });
     
     it('should define application routes', function() {
       expect(app.map['post']).to.be.an('array');
@@ -79,7 +81,7 @@ describe('Router#match', function() {
       });
       
       router.match('bands', 'bands#create', { via: 'POST' });
-    })
+    });
     
     it('should define application routes', function() {
       expect(app.map['post']).to.be.an('array');
@@ -108,7 +110,7 @@ describe('Router#match', function() {
       });
       
       router.match('bands', 'bands#create', { via: ['post', 'put'] });
-    })
+    });
     
     it('should define application routes', function() {
       expect(Object.keys(app.map)).to.have.length(2);
@@ -153,7 +155,7 @@ describe('Router#match', function() {
       });
       
       router.match('songs', 'songs#list', { as: 'songs' });
-    })
+    });
     
     it('should define application routes', function() {
       expect(app.map['get']).to.be.an('array');
@@ -171,7 +173,7 @@ describe('Router#match', function() {
     });
     
     it('should register helper for route', function() {
-      var entry = app.helpers['songs'];
+      var entry = app.helpers.songs;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/songs');
@@ -191,7 +193,7 @@ describe('Router#match', function() {
       });
       
       router.match('bands', { controller: 'bands', action: 'list' });
-    })
+    });
     
     it('should define application routes', function() {
       expect(app.map['get']).to.be.an('array');
@@ -220,7 +222,7 @@ describe('Router#match', function() {
       });
       
       router.match('bands', { controller: 'bands', action: 'create', via: 'post' });
-    })
+    });
     
     it('should define application routes', function() {
       expect(app.map['post']).to.be.an('array');
@@ -251,7 +253,7 @@ describe('Router#match', function() {
       router.match('lyrics', function() {
         return 'Hello, Function';
       });
-    })
+    });
     
     it('should define route', function() {
       expect(app.map['get']).to.be.an('array');
@@ -286,7 +288,7 @@ describe('Router#match', function() {
       router.match('lyrics', function() {
         return 'Hello, Function';
       }, { via: 'post' });
-    })
+    });
     
     it('should define route', function() {
       expect(app.map['post']).to.be.an('array');
@@ -326,7 +328,7 @@ describe('Router#match', function() {
       }
       
       router.match('lyrics', [ hello1, hello2 ]);
-    })
+    });
     
     it('should define route', function() {
       expect(app.map['get']).to.be.an('array');
@@ -369,7 +371,7 @@ describe('Router#match', function() {
       }
       
       router.match('lyrics', [ hello1, hello2 ], { via: 'post' });
-    })
+    });
     
     it('should define route', function() {
       expect(app.map['post']).to.be.an('array');
@@ -412,7 +414,7 @@ describe('Router#match', function() {
       }
       
       router.match('lyrics', hello1, hello2);
-    })
+    });
     
     it('should define route', function() {
       expect(app.map['get']).to.be.an('array');
@@ -455,7 +457,7 @@ describe('Router#match', function() {
       }
       
       router.match('lyrics', hello1, hello2, { via: 'post' });
-    })
+    });
     
     it('should define route', function() {
       expect(app.map['post']).to.be.an('array');

@@ -189,7 +189,7 @@ describe('Router#match', function() {
     });
     
     it('should register helper for route', function() {
-      var entry = app.helpers['makeNoise'];
+      var entry = app.helpers.makeNoise;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/r2-d2');
