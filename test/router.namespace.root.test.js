@@ -1,3 +1,5 @@
+/* global describe, it, before, expect */
+
 var Router = require('../lib/router')
   , MockApplication = require('./mocks/mockapplication');
   
@@ -7,7 +9,7 @@ describe('Router#namespace', function() {
   function handler(controller, action) {
     return function() {
       return { controller: controller, action: action };
-    }
+    };
   }
 
   describe('namespace with root route', function() {
@@ -23,7 +25,7 @@ describe('Router#namespace', function() {
       router.namespace('top40', function() {
         router.root('pages#main');
       });
-    })
+    });
     
     it('should define application routes', function() {
       expect(app.map['get']).to.be.an('array');

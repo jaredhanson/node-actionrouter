@@ -1,3 +1,5 @@
+/* global describe, it, before, expect */
+
 var Router = require('../lib/router')
   , MockApplication = require('./mocks/mockapplication');
   
@@ -7,7 +9,7 @@ describe('Router#namespace', function() {
   function handler(controller, action) {
     return function() {
       return { controller: controller, action: action };
-    }
+    };
   }
 
   describe('namespace with match route', function() {
@@ -26,7 +28,7 @@ describe('Router#namespace', function() {
       router.namespace('top40', function() {
         router.match('songs/:title', 'songs#show', { as: 'songs' });
       });
-    })
+    });
     
     it('should define application routes', function() {
       expect(app.map['get']).to.be.an('array');
@@ -44,7 +46,7 @@ describe('Router#namespace', function() {
     });
     
     it('should register helper for route', function() {
-      var entry = app.helpers['songs'];
+      var entry = app.helpers.songs;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/top40/songs/:title');
@@ -66,7 +68,7 @@ describe('Router#namespace', function() {
       router.namespace('top40', function() {
         router.match('/bands/:name', 'bands#show');
       });
-    })
+    });
     
     it('should define application routes', function() {
       expect(app.map['get']).to.be.an('array');
