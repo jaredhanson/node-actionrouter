@@ -3,24 +3,24 @@
   "version": "0.0.1",
   "description": "RESTful MVC router that dispatches to a controller and action.",
   "keywords": [
+    "locomotive",
+    "express",
+    "connect",
     "router",
     "mvc",
-    "model2",
-    "connect",
-    "express",
-    "locomotive"
+    "model2"
   ],
+  "author": {
+    "name": "Jared Hanson",
+    "email": "jaredhanson@gmail.com",
+    "url": "http://www.jaredhanson.net/"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/jaredhanson/node-actionrouter.git"
   },
   "bugs": {
     "url": "http://github.com/jaredhanson/node-actionrouter/issues"
-  },
-  "author": {
-    "name": "Jared Hanson",
-    "email": "jaredhanson@gmail.com",
-    "url": "http://www.jaredhanson.net/"
   },
   "licenses": [
     {
