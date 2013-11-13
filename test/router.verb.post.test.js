@@ -22,7 +22,7 @@ describe('Router#post', function() {
         app[method](path, handler);
       });
       
-      router.post('songs/:title', 'songs#create');
+      router.post('songs', 'songs#create');
     });
     
     it('should define application routes', function() {
@@ -32,7 +32,7 @@ describe('Router#post', function() {
     
     it('should create route to controller action', function() {
       var route = app.map['post'][0];
-      expect(route.path).to.equal('/songs/:title');
+      expect(route.path).to.equal('/songs');
       expect(route.handler).to.be.a('function');
       
       var rv = route.handler();
