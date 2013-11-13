@@ -240,12 +240,12 @@ describe('Router#match', function() {
     });
   });
   
-  describe('direct to function', function() {
-    var router, app;
+  describe('middleware function', function() {
+    var app, router;
     
     before(function() {
-      router = new Router(handler);
       app = new MockApplication();
+      router = new Router(handler);
       router.define(function(method, path, handler) {
         app[method](path, handler);
       });
@@ -255,32 +255,29 @@ describe('Router#match', function() {
       });
     });
     
-    it('should define route', function() {
+    it('should define application route', function() {
       expect(app.map['get']).to.be.an('array');
       expect(app.map['get']).to.have.length(1);
     });
     
-    it('should create route with path and handler', function() {
+    it('should create route to middleware', function() {
       var route = app.map['get'][0];
       expect(route.path).to.equal('/lyrics');
       expect(route.handler).to.be.an('array');
       expect(route.handler).to.have.length(1);
       expect(route.handler[0]).to.be.a('function');
-    });
-    
-    it('should create handler with function', function() {
-      var route = app.map['get'][0]
-        , rv = route.handler[0]();
+      
+      var rv = route.handler[0]();
       expect(rv).to.equal('Hello, Function');
     });
   });
   
-  describe('direct to function with via option', function() {
-    var router, app;
+  describe('middleware function and via option', function() {
+    var app, router;
     
     before(function() {
-      router = new Router(handler);
       app = new MockApplication();
+      router = new Router(handler);
       router.define(function(method, path, handler) {
         app[method](path, handler);
       });
@@ -290,32 +287,29 @@ describe('Router#match', function() {
       }, { via: 'post' });
     });
     
-    it('should define route', function() {
+    it('should define application route', function() {
       expect(app.map['post']).to.be.an('array');
       expect(app.map['post']).to.have.length(1);
     });
     
-    it('should create route with path and handler', function() {
+    it('should create route to middleware', function() {
       var route = app.map['post'][0];
       expect(route.path).to.equal('/lyrics');
       expect(route.handler).to.be.an('array');
       expect(route.handler).to.have.length(1);
       expect(route.handler[0]).to.be.a('function');
-    });
-    
-    it('should create handler with function', function() {
-      var route = app.map['post'][0]
-        , rv = route.handler[0]();
+      
+      var rv = route.handler[0]();
       expect(rv).to.equal('Hello, Function');
     });
   });
   
-  describe('direct to array of functions', function() {
-    var router, app;
+  describe('middleware function array', function() {
+    var app, router;
     
     before(function() {
-      router = new Router(handler);
       app = new MockApplication();
+      router = new Router(handler);
       router.define(function(method, path, handler) {
         app[method](path, handler);
       });
@@ -330,35 +324,32 @@ describe('Router#match', function() {
       router.match('lyrics', [ hello1, hello2 ]);
     });
     
-    it('should define route', function() {
+    it('should define application route', function() {
       expect(app.map['get']).to.be.an('array');
       expect(app.map['get']).to.have.length(1);
     });
     
-    it('should create route with path and handler', function() {
+    it('should create route to middleware', function() {
       var route = app.map['get'][0];
       expect(route.path).to.equal('/lyrics');
       expect(route.handler).to.be.an('array');
       expect(route.handler).to.have.length(2);
       expect(route.handler[0]).to.be.a('function');
       expect(route.handler[1]).to.be.a('function');
-    });
-    
-    it('should create handler with array function', function() {
-      var route = app.map['get'][0]
-        , rv = route.handler[0]();
+      
+      var rv = route.handler[0]();
       expect(rv).to.equal('Hello, 1');
       rv = route.handler[1]();
       expect(rv).to.equal('Hello, 2');
     });
   });
   
-  describe('direct to array of functions with via option', function() {
-    var router, app;
+  describe('middleware function array and via option', function() {
+    var app, router;
     
     before(function() {
-      router = new Router(handler);
       app = new MockApplication();
+      router = new Router(handler);
       router.define(function(method, path, handler) {
         app[method](path, handler);
       });
@@ -373,35 +364,32 @@ describe('Router#match', function() {
       router.match('lyrics', [ hello1, hello2 ], { via: 'post' });
     });
     
-    it('should define route', function() {
+    it('should define application route', function() {
       expect(app.map['post']).to.be.an('array');
       expect(app.map['post']).to.have.length(1);
     });
     
-    it('should create route with path and handler', function() {
+    it('should create route to middleware', function() {
       var route = app.map['post'][0];
       expect(route.path).to.equal('/lyrics');
       expect(route.handler).to.be.an('array');
       expect(route.handler).to.have.length(2);
       expect(route.handler[0]).to.be.a('function');
       expect(route.handler[1]).to.be.a('function');
-    });
-    
-    it('should create handler with array function', function() {
-      var route = app.map['post'][0]
-        , rv = route.handler[0]();
+      
+      var rv = route.handler[0]();
       expect(rv).to.equal('Hello, 1');
       rv = route.handler[1]();
       expect(rv).to.equal('Hello, 2');
     });
   });
   
-  describe('direct to function chain', function() {
-    var router, app;
+  describe('middleware function chain', function() {
+    var app, router;
     
     before(function() {
-      router = new Router(handler);
       app = new MockApplication();
+      router = new Router(handler);
       router.define(function(method, path, handler) {
         app[method](path, handler);
       });
@@ -416,35 +404,32 @@ describe('Router#match', function() {
       router.match('lyrics', hello1, hello2);
     });
     
-    it('should define route', function() {
+    it('should define application route', function() {
       expect(app.map['get']).to.be.an('array');
       expect(app.map['get']).to.have.length(1);
     });
     
-    it('should create route with path and handler', function() {
+    it('should create route to middleware', function() {
       var route = app.map['get'][0];
       expect(route.path).to.equal('/lyrics');
       expect(route.handler).to.be.an('array');
       expect(route.handler).to.have.length(2);
       expect(route.handler[0]).to.be.a('function');
       expect(route.handler[1]).to.be.a('function');
-    });
-    
-    it('should create handler with array function', function() {
-      var route = app.map['get'][0]
-        , rv = route.handler[0]();
+      
+      var rv = route.handler[0]();
       expect(rv).to.equal('Hello, 1');
       rv = route.handler[1]();
       expect(rv).to.equal('Hello, 2');
     });
   });
   
-  describe('direct to function chain with via option', function() {
-    var router, app;
+  describe('middleware function chain and via option', function() {
+    var app, router;
     
     before(function() {
-      router = new Router(handler);
       app = new MockApplication();
+      router = new Router(handler);
       router.define(function(method, path, handler) {
         app[method](path, handler);
       });
@@ -459,23 +444,20 @@ describe('Router#match', function() {
       router.match('lyrics', hello1, hello2, { via: 'post' });
     });
     
-    it('should define route', function() {
+    it('should define application route', function() {
       expect(app.map['post']).to.be.an('array');
       expect(app.map['post']).to.have.length(1);
     });
     
-    it('should create route with path and handler', function() {
+    it('should create route to middleware', function() {
       var route = app.map['post'][0];
       expect(route.path).to.equal('/lyrics');
       expect(route.handler).to.be.an('array');
       expect(route.handler).to.have.length(2);
       expect(route.handler[0]).to.be.a('function');
       expect(route.handler[1]).to.be.a('function');
-    });
-    
-    it('should create handler with array function', function() {
-      var route = app.map['post'][0]
-        , rv = route.handler[0]();
+      
+      var rv = route.handler[0]();
       expect(rv).to.equal('Hello, 1');
       rv = route.handler[1]();
       expect(rv).to.equal('Hello, 2');
