@@ -184,4 +184,84 @@ describe('Router#get', function() {
     });
   });
   
+  describe('middleware function array', function() {
+    var app, router;
+    
+    before(function() {
+      app = new MockApplication();
+      router = new Router(handler);
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+      
+      function hello1() {
+        return 'Hello, 1';
+      }
+      function hello2() {
+        return 'Hello, 2';
+      }
+      
+      router.get('lyrics', [ hello1, hello2 ]);
+    });
+    
+    it('should define application routes', function() {
+      expect(app.map['get']).to.be.an('array');
+      expect(app.map['get']).to.have.length(1);
+    });
+    
+    it('should create route to middleware', function() {
+      var route = app.map['get'][0];
+      expect(route.path).to.equal('/lyrics');
+      expect(route.handler).to.be.an('array');
+      expect(route.handler).to.have.length(2);
+      expect(route.handler[0]).to.be.a('function');
+      expect(route.handler[1]).to.be.a('function');
+      
+      var rv = route.handler[0]();
+      expect(rv).to.equal('Hello, 1');
+      rv = route.handler[1]();
+      expect(rv).to.equal('Hello, 2');
+    });
+  });
+  
+  describe('middleware function chain', function() {
+    var app, router;
+    
+    before(function() {
+      app = new MockApplication();
+      router = new Router(handler);
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+      
+      function hello1() {
+        return 'Hello, 1';
+      }
+      function hello2() {
+        return 'Hello, 2';
+      }
+      
+      router.get('lyrics', hello1, hello2);
+    });
+    
+    it('should define application routes', function() {
+      expect(app.map['get']).to.be.an('array');
+      expect(app.map['get']).to.have.length(1);
+    });
+    
+    it('should create route to middleware', function() {
+      var route = app.map['get'][0];
+      expect(route.path).to.equal('/lyrics');
+      expect(route.handler).to.be.an('array');
+      expect(route.handler).to.have.length(2);
+      expect(route.handler[0]).to.be.a('function');
+      expect(route.handler[1]).to.be.a('function');
+      
+      var rv = route.handler[0]();
+      expect(rv).to.equal('Hello, 1');
+      rv = route.handler[1]();
+      expect(rv).to.equal('Hello, 2');
+    });
+  });
+  
 });
