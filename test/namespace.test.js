@@ -28,19 +28,20 @@ describe('Namespace', function() {
       expect(ns.qpath('/photos/')).to.equal('/photos/');
     });
     
-    it('should qualify controller', function() {
+    it('should qualify module', function() {
       expect(ns.qmodule('PhotosController')).to.equal('photos');
     });
     
-    it('should qualify helpers', function() {
+    it('should qualify function', function() {
       expect(ns.qfunction('photos')).to.equal('photos');
+      expect(ns.qfunction('edit_photos')).to.equal('editPhotos');
     });
   });
   
   describe('constructed with name', function() {
     var ns = new Namespace('foo');
     
-    it('should have path property', function() {
+    it('should have name property', function() {
       expect(ns.name).to.equal('foo');
     });
     
@@ -48,7 +49,7 @@ describe('Namespace', function() {
       expect(ns.module).to.equal('foo');
     });
     
-    it('should have helper property', function() {
+    it('should have method property', function() {
       expect(ns.method).to.equal('foo');
     });
     
@@ -56,24 +57,26 @@ describe('Namespace', function() {
       expect(ns.parent).to.be.null;
     });
     
-    it('should qualify controller', function() {
-      expect(ns.qmodule('PhotosController')).to.equal('foo/photos');
-    });
-    
-    it('should qualify helpers', function() {
-      expect(ns.qfunction('photos')).to.equal('fooPhotos');
-    });
-    
     it('should qualify paths', function() {
       expect(ns.qpath('photos')).to.equal('/foo/photos');
       expect(ns.qpath('/photos')).to.equal('/foo/photos');
+      expect(ns.qpath('/photos/')).to.equal('/foo/photos/');
+    });
+    
+    it('should qualify module', function() {
+      expect(ns.qmodule('PhotosController')).to.equal('foo/photos');
+    });
+    
+    it('should qualify function', function() {
+      expect(ns.qfunction('photos')).to.equal('fooPhotos');
+      expect(ns.qfunction('edit_photos')).to.equal('fooEditPhotos');
     });
   });
   
   describe('constructed with name and module option', function() {
     var ns = new Namespace('foo', { module: 'Bar' });
     
-    it('should have path property', function() {
+    it('should have name property', function() {
       expect(ns.name).to.equal('foo');
     });
     
@@ -81,7 +84,7 @@ describe('Namespace', function() {
       expect(ns.module).to.equal('bar');
     });
     
-    it('should have helper property', function() {
+    it('should have method property', function() {
       expect(ns.method).to.equal('foo');
     });
     
@@ -89,24 +92,26 @@ describe('Namespace', function() {
       expect(ns.parent).to.be.null;
     });
     
-    it('should qualify controller', function() {
-      expect(ns.qmodule('PhotosController')).to.equal('bar/photos');
-    });
-    
-    it('should qualify helpers', function() {
-      expect(ns.qfunction('photos')).to.equal('fooPhotos');
-    });
-    
     it('should qualify paths', function() {
       expect(ns.qpath('photos')).to.equal('/foo/photos');
       expect(ns.qpath('/photos')).to.equal('/foo/photos');
+      expect(ns.qpath('/photos/')).to.equal('/foo/photos/');
+    });
+    
+    it('should qualify module', function() {
+      expect(ns.qmodule('PhotosController')).to.equal('bar/photos');
+    });
+    
+    it('should qualify function', function() {
+      expect(ns.qfunction('photos')).to.equal('fooPhotos');
+      expect(ns.qfunction('edit_photos')).to.equal('fooEditPhotos');
     });
   });
   
-  describe('constructed with name and helper option', function() {
+  describe('constructed with name and method option', function() {
     var ns = new Namespace('foo', { method: 'bar' });
     
-    it('should have path property', function() {
+    it('should have name property', function() {
       expect(ns.name).to.equal('foo');
     });
     
@@ -114,7 +119,7 @@ describe('Namespace', function() {
       expect(ns.module).to.equal('foo');
     });
     
-    it('should have helper property', function() {
+    it('should have method property', function() {
       expect(ns.method).to.equal('bar');
     });
     
@@ -122,24 +127,26 @@ describe('Namespace', function() {
       expect(ns.parent).to.be.null;
     });
     
-    it('should qualify controller', function() {
-      expect(ns.qmodule('PhotosController')).to.equal('foo/photos');
-    });
-    
-    it('should qualify helpers', function() {
-      expect(ns.qfunction('photos')).to.equal('barPhotos');
-    });
-    
     it('should qualify paths', function() {
       expect(ns.qpath('photos')).to.equal('/foo/photos');
       expect(ns.qpath('/photos')).to.equal('/foo/photos');
+      expect(ns.qpath('/photos/')).to.equal('/foo/photos/');
+    });
+    
+    it('should qualify module', function() {
+      expect(ns.qmodule('PhotosController')).to.equal('foo/photos');
+    });
+    
+    it('should qualify function', function() {
+      expect(ns.qfunction('photos')).to.equal('barPhotos');
+      expect(ns.qfunction('edit_photos')).to.equal('barEditPhotos');
     });
   });
   
   describe('constructed with name and null module option', function() {
     var ns = new Namespace('foo', { module: null });
     
-    it('should have path property', function() {
+    it('should have name property', function() {
       expect(ns.name).to.equal('foo');
     });
     
@@ -147,7 +154,7 @@ describe('Namespace', function() {
       expect(ns.module).to.equal('');
     });
     
-    it('should have helper property', function() {
+    it('should have method property', function() {
       expect(ns.method).to.equal('foo');
     });
     
@@ -155,51 +162,55 @@ describe('Namespace', function() {
       expect(ns.parent).to.be.null;
     });
     
-    it('should qualify controller', function() {
-      expect(ns.qmodule('PhotosController')).to.equal('photos');
-    });
-    
-    it('should qualify helpers', function() {
-      expect(ns.qfunction('photos')).to.equal('fooPhotos');
-    });
-    
     it('should qualify paths', function() {
       expect(ns.qpath('photos')).to.equal('/foo/photos');
       expect(ns.qpath('/photos')).to.equal('/foo/photos');
+      expect(ns.qpath('/photos/')).to.equal('/foo/photos/');
+    });
+    
+    it('should qualify module', function() {
+      expect(ns.qmodule('PhotosController')).to.equal('photos');
+    });
+    
+    it('should qualify function', function() {
+      expect(ns.qfunction('photos')).to.equal('fooPhotos');
+      expect(ns.qfunction('edit_photos')).to.equal('fooEditPhotos');
     });
   });
   
   describe('constructed with parent', function() {
-    var parent = new Namespace('net');
-    var ns = new Namespace('http', {}, parent);
+    var net = new Namespace('net');
+    var http = new Namespace('http', {}, net);
     
-    it('should have path property', function() {
-      expect(ns.name).to.equal('http');
+    it('should have name property', function() {
+      expect(http.name).to.equal('http');
     });
     
     it('should have module property', function() {
-      expect(ns.module).to.equal('http');
+      expect(http.module).to.equal('http');
     });
     
-    it('should have helper property', function() {
-      expect(ns.method).to.equal('http');
+    it('should have method property', function() {
+      expect(http.method).to.equal('http');
     });
     
-    it('should not have parent', function() {
-      expect(ns.parent).to.be.an('object');
-    });
-    
-    it('should qualify controller', function() {
-      expect(ns.qmodule('ProxiesController')).to.equal('net/http/proxies');
-    });
-    
-    it('should qualify helpers', function() {
-      expect(ns.qfunction('proxies')).to.equal('netHttpProxies');
+    it('should have parent', function() {
+      expect(http.parent).to.be.an('object');
     });
     
     it('should qualify paths', function() {
-      expect(ns.qpath('proxies')).to.equal('/net/http/proxies');
-      expect(ns.qpath('/proxies')).to.equal('/net/http/proxies');
+      expect(http.qpath('proxies')).to.equal('/net/http/proxies');
+      expect(http.qpath('/proxies')).to.equal('/net/http/proxies');
+      expect(http.qpath('/proxies/')).to.equal('/net/http/proxies/');
+    });
+    
+    it('should qualify module', function() {
+      expect(http.qmodule('ProxiesController')).to.equal('net/http/proxies');
+    });
+    
+    it('should qualify function', function() {
+      expect(http.qfunction('proxies')).to.equal('netHttpProxies');
+      expect(http.qfunction('edit_proxies')).to.equal('netHttpEditProxies');
     });
   });
   
