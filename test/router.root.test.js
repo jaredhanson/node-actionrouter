@@ -1,3 +1,5 @@
+/* global describe, it, before, expect */
+
 var Router = require('../lib/router')
   , MockApplication = require('./mocks/mockapplication');
   
@@ -7,7 +9,7 @@ describe('Router#root', function() {
   function handler(controller, action) {
     return function() {
       return { controller: controller, action: action };
-    }
+    };
   }
   
   describe('shorthand notation', function() {
@@ -21,7 +23,7 @@ describe('Router#root', function() {
       });
       
       router.root('pages#main');
-    })
+    });
     
     it('should define application routes', function() {
       expect(app.map['get']).to.be.an('array');
@@ -50,7 +52,7 @@ describe('Router#root', function() {
       });
       
       router.root({ controller: 'pages', action: 'home' });
-    })
+    });
     
     it('should define application routes', function() {
       expect(app.map['get']).to.be.an('array');
