@@ -1,3 +1,5 @@
+/* global describe, it, before, expect */
+
 var Router = require('../lib/router')
   , MockApplication = require('./mocks/mockapplication');
   
@@ -7,7 +9,7 @@ describe('Router#resource', function() {
   function handler(controller, action) {
     return function() {
       return { controller: controller, action: action };
-    }
+    };
   }
   
   describe('resource with nested resource', function() {
@@ -26,7 +28,7 @@ describe('Router#resource', function() {
       router.resource('account', function() {
         this.resource('password');
       });
-    })
+    });
     
     it('should define application routes', function() {
       expect(Object.keys(app.map)).to.have.length(4);
@@ -105,7 +107,7 @@ describe('Router#resource', function() {
     });
     
     it('should register show helper for route', function() {
-      var entry = app.helpers['account'];
+      var entry = app.helpers.account;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/account.:format?');
@@ -114,7 +116,7 @@ describe('Router#resource', function() {
     });
     
     it('should register new helper for route', function() {
-      var entry = app.helpers['newAccount'];
+      var entry = app.helpers.newAccount;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/account/new.:format?');
@@ -123,7 +125,7 @@ describe('Router#resource', function() {
     });
     
     it('should register edit helper for route', function() {
-      var entry = app.helpers['editAccount'];
+      var entry = app.helpers.editAccount;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/account/edit.:format?');
@@ -132,7 +134,7 @@ describe('Router#resource', function() {
     });
     
     it('should register show helper for nested route', function() {
-      var entry = app.helpers['accountPassword'];
+      var entry = app.helpers.accountPassword;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/account/password.:format?');
@@ -141,7 +143,7 @@ describe('Router#resource', function() {
     });
     
     it('should register new helper for nested route', function() {
-      var entry = app.helpers['newAccountPassword'];
+      var entry = app.helpers.newAccountPassword;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/account/password/new.:format?');
@@ -150,7 +152,7 @@ describe('Router#resource', function() {
     });
     
     it('should register edit helper for nested route', function() {
-      var entry = app.helpers['editAccountPassword'];
+      var entry = app.helpers.editAccountPassword;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/account/password/edit.:format?');
@@ -175,7 +177,7 @@ describe('Router#resource', function() {
       router.resource('account', { namespace: true }, function() {
         this.resource('password');
       });
-    })
+    });
     
     it('should define application routes', function() {
       expect(Object.keys(app.map)).to.have.length(4);
@@ -254,7 +256,7 @@ describe('Router#resource', function() {
     });
     
     it('should register show helper for route', function() {
-      var entry = app.helpers['account'];
+      var entry = app.helpers.account;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/account.:format?');
@@ -263,7 +265,7 @@ describe('Router#resource', function() {
     });
     
     it('should register new helper for route', function() {
-      var entry = app.helpers['newAccount'];
+      var entry = app.helpers.newAccount;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/account/new.:format?');
@@ -272,7 +274,7 @@ describe('Router#resource', function() {
     });
     
     it('should register edit helper for route', function() {
-      var entry = app.helpers['editAccount'];
+      var entry = app.helpers.editAccount;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/account/edit.:format?');
@@ -281,7 +283,7 @@ describe('Router#resource', function() {
     });
     
     it('should register show helper for nested route', function() {
-      var entry = app.helpers['accountPassword'];
+      var entry = app.helpers.accountPassword;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/account/password.:format?');
@@ -290,7 +292,7 @@ describe('Router#resource', function() {
     });
     
     it('should register new helper for nested route', function() {
-      var entry = app.helpers['newAccountPassword'];
+      var entry = app.helpers.newAccountPassword;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/account/password/new.:format?');
@@ -299,7 +301,7 @@ describe('Router#resource', function() {
     });
     
     it('should register edit helper for nested route', function() {
-      var entry = app.helpers['editAccountPassword'];
+      var entry = app.helpers.editAccountPassword;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/account/password/edit.:format?');
@@ -324,7 +326,7 @@ describe('Router#resource', function() {
       router.resource('settings', function() {
         this.resources('accounts');
       });
-    })
+    });
     
     it('should define application routes', function() {
       expect(Object.keys(app.map)).to.have.length(4);
@@ -413,7 +415,7 @@ describe('Router#resource', function() {
     });
     
     it('should register show helper for route', function() {
-      var entry = app.helpers['settings'];
+      var entry = app.helpers.settings;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/settings.:format?');
@@ -422,7 +424,7 @@ describe('Router#resource', function() {
     });
     
     it('should register new helper for route', function() {
-      var entry = app.helpers['newSettings'];
+      var entry = app.helpers.newSettings;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/settings/new.:format?');
@@ -431,7 +433,7 @@ describe('Router#resource', function() {
     });
     
     it('should register edit helper for route', function() {
-      var entry = app.helpers['editSettings'];
+      var entry = app.helpers.editSettings;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/settings/edit.:format?');
@@ -440,7 +442,7 @@ describe('Router#resource', function() {
     });
     
     it('should register index helper for nested route', function() {
-      var entry = app.helpers['settingsAccounts'];
+      var entry = app.helpers.settingsAccounts;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/settings/accounts.:format?');
@@ -449,7 +451,7 @@ describe('Router#resource', function() {
     });
     
     it('should register show helper for nested route', function() {
-      var entry = app.helpers['settingsAccount'];
+      var entry = app.helpers.settingsAccount;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/settings/accounts/:id.:format?');
@@ -458,7 +460,7 @@ describe('Router#resource', function() {
     });
     
     it('should register new helper for nested route', function() {
-      var entry = app.helpers['newSettingsAccount'];
+      var entry = app.helpers.newSettingsAccount;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/settings/accounts/new.:format?');
@@ -467,7 +469,7 @@ describe('Router#resource', function() {
     });
     
     it('should register edit helper for nested route', function() {
-      var entry = app.helpers['editSettingsAccount'];
+      var entry = app.helpers.editSettingsAccount;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/settings/accounts/:id/edit.:format?');
@@ -492,7 +494,7 @@ describe('Router#resource', function() {
       router.resource('settings', { namespace: true }, function() {
         this.resources('accounts');
       });
-    })
+    });
     
     it('should define application routes', function() {
       expect(Object.keys(app.map)).to.have.length(4);
@@ -581,7 +583,7 @@ describe('Router#resource', function() {
     });
     
     it('should register show helper for route', function() {
-      var entry = app.helpers['settings'];
+      var entry = app.helpers.settings;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/settings.:format?');
@@ -590,7 +592,7 @@ describe('Router#resource', function() {
     });
     
     it('should register new helper for route', function() {
-      var entry = app.helpers['newSettings'];
+      var entry = app.helpers.newSettings;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/settings/new.:format?');
@@ -599,7 +601,7 @@ describe('Router#resource', function() {
     });
     
     it('should register edit helper for route', function() {
-      var entry = app.helpers['editSettings'];
+      var entry = app.helpers.editSettings;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/settings/edit.:format?');
@@ -608,7 +610,7 @@ describe('Router#resource', function() {
     });
     
     it('should register index helper for nested route', function() {
-      var entry = app.helpers['settingsAccounts'];
+      var entry = app.helpers.settingsAccounts;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/settings/accounts.:format?');
@@ -617,7 +619,7 @@ describe('Router#resource', function() {
     });
     
     it('should register show helper for nested route', function() {
-      var entry = app.helpers['settingsAccount'];
+      var entry = app.helpers.settingsAccount;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/settings/accounts/:id.:format?');
@@ -626,7 +628,7 @@ describe('Router#resource', function() {
     });
     
     it('should register new helper for nested route', function() {
-      var entry = app.helpers['newSettingsAccount'];
+      var entry = app.helpers.newSettingsAccount;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/settings/accounts/new.:format?');
@@ -635,7 +637,7 @@ describe('Router#resource', function() {
     });
     
     it('should register edit helper for nested route', function() {
-      var entry = app.helpers['editSettingsAccount'];
+      var entry = app.helpers.editSettingsAccount;
       
       expect(entry).to.be.an('object');
       expect(entry.pattern).to.equal('/settings/accounts/:id/edit.:format?');
