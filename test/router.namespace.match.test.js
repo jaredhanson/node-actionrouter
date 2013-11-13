@@ -52,5 +52,36 @@ describe('Router#namespace', function() {
       expect(entry.action).to.equal('show');
     });
   });
+  
+  describe('namespace with match route declared with path preceeded by slash', function() {
+    var app, router;
+    
+    before(function() {
+      app = new MockApplication();
+      router = new Router(handler);
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+      
+      router.namespace('top40', function() {
+        router.match('/bands/:name', 'bands#show');
+      });
+    })
+    
+    it('should define application routes', function() {
+      expect(app.map['get']).to.be.an('array');
+      expect(app.map['get']).to.have.length(1);
+    });
+    
+    it('should create route to controller action', function() {
+      var route = app.map['get'][0];
+      expect(route.path).to.equal('/top40/bands/:name');
+      expect(route.handler).to.be.a('function');
+      
+      var rv = route.handler();
+      expect(rv.controller).to.equal('top40/bands');
+      expect(rv.action).to.equal('show');
+    });
+  });
 
 });

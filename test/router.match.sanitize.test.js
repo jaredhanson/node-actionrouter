@@ -12,7 +12,7 @@ describe('Router#match', function() {
     };
   }
   
-  describe('shorthand notation with path preceeded by slash', function() {
+  describe('shorthand notation declared with path preceeded by slash', function() {
     var app, router;
     
     before(function() {
