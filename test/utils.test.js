@@ -93,38 +93,38 @@ describe('utils', function() {
   });
   
   
-  describe('#helperize', function() {
+  describe('#functionize', function() {
     
     it('should normalize common strings', function() {
-      expect(utils.helperize('foo')).to.equal('foo');
-      expect(utils.helperize('foo', 'Path')).to.equal('fooPath');
-      expect(utils.helperize('foo', 'URL')).to.equal('fooURL');
-      expect(utils.helperize('edit', 'foo', 'path')).to.equal('editFooPath');
+      expect(utils.functionize('foo')).to.equal('foo');
+      expect(utils.functionize('foo', 'Path')).to.equal('fooPath');
+      expect(utils.functionize('foo', 'URL')).to.equal('fooURL');
+      expect(utils.functionize('edit', 'foo', 'path')).to.equal('editFooPath');
     });
     
     it('should normalize snake case strings', function() {
-      expect(utils.helperize('foo_bar')).to.equal('fooBar');
-      expect(utils.helperize('foo_bar', 'Path')).to.equal('fooBarPath');
-      expect(utils.helperize('foo_bar', 'URL')).to.equal('fooBarURL');
-      expect(utils.helperize('edit', 'foo_bar', 'path')).to.equal('editFooBarPath');
+      expect(utils.functionize('foo_bar')).to.equal('fooBar');
+      expect(utils.functionize('foo_bar', 'Path')).to.equal('fooBarPath');
+      expect(utils.functionize('foo_bar', 'URL')).to.equal('fooBarURL');
+      expect(utils.functionize('edit', 'foo_bar', 'path')).to.equal('editFooBarPath');
     });
     
     it('should normalize lower camel case strings', function() {
-      expect(utils.helperize('fooBar')).to.equal('fooBar');
-      expect(utils.helperize('fooBar', 'Path')).to.equal('fooBarPath');
-      expect(utils.helperize('fooBar', 'URL')).to.equal('fooBarURL');
-      expect(utils.helperize('edit', 'fooBar', 'path')).to.equal('editFooBarPath');
+      expect(utils.functionize('fooBar')).to.equal('fooBar');
+      expect(utils.functionize('fooBar', 'Path')).to.equal('fooBarPath');
+      expect(utils.functionize('fooBar', 'URL')).to.equal('fooBarURL');
+      expect(utils.functionize('edit', 'fooBar', 'path')).to.equal('editFooBarPath');
     });
     
     it('should normalize upper camel case strings', function() {
-      expect(utils.helperize('FooBar')).to.equal('fooBar');
-      expect(utils.helperize('FooBar', 'Path')).to.equal('fooBarPath');
-      expect(utils.helperize('FooBar', 'URL')).to.equal('fooBarURL');
-      expect(utils.helperize('Edit', 'FooBar', 'Path')).to.equal('editFooBarPath');
+      expect(utils.functionize('FooBar')).to.equal('fooBar');
+      expect(utils.functionize('FooBar', 'Path')).to.equal('fooBarPath');
+      expect(utils.functionize('FooBar', 'URL')).to.equal('fooBarURL');
+      expect(utils.functionize('Edit', 'FooBar', 'Path')).to.equal('editFooBarPath');
     });
     
     it('should return undefined if called without an argument', function() {
-      expect(utils.helperize()).to.be.undefined;
+      expect(utils.functionize()).to.be.undefined;
     });
     
   });
