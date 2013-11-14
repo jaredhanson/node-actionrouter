@@ -72,27 +72,6 @@ describe('utils', function() {
   });
   
   
-  describe('#actionize', function() {
-    
-    it('should normalize snake case strings', function() {
-      expect(utils.controllerize('foo_bar')).to.equal('fooBar');
-    });
-    
-    it('should normalize lower camel case strings', function() {
-      expect(utils.controllerize('fooBar')).to.equal('fooBar');
-    });
-    
-    it('should normalize upper camel case strings', function() {
-      expect(utils.controllerize('FooBar')).to.equal('fooBar');
-    });
-    
-    it('should return undefined if called without an argument', function() {
-      expect(utils.actionize()).to.be.undefined;
-    });
-    
-  });
-  
-  
   describe('#functionize', function() {
     
     it('should normalize common strings', function() {
