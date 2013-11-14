@@ -30,8 +30,8 @@ describe('Namespace', function() {
       expect(ns.qpath('/photos/')).to.equal('/photos/');
     });
     
-    it('should qualify module', function() {
-      expect(ns.qmodule('PhotosController')).to.equal('photos');
+    it('should qualify controller', function() {
+      expect(ns.qcontroller('PhotosController')).to.equal('photos');
     });
     
     it('should qualify function', function() {
@@ -65,8 +65,8 @@ describe('Namespace', function() {
       expect(ns.qpath(':photos:')).to.equal(':photos:');
     });
     
-    it('should qualify module', function() {
-      expect(ns.qmodule('PhotosController')).to.equal('photos');
+    it('should qualify controller', function() {
+      expect(ns.qcontroller('PhotosController')).to.equal('photos');
     });
     
     it('should qualify function', function() {
@@ -100,8 +100,8 @@ describe('Namespace', function() {
       expect(ns.qpath('/photos/')).to.equal('/foo/photos/');
     });
     
-    it('should qualify module', function() {
-      expect(ns.qmodule('PhotosController')).to.equal('foo/photos');
+    it('should qualify controller', function() {
+      expect(ns.qcontroller('PhotosController')).to.equal('foo/photos');
     });
     
     it('should qualify function', function() {
@@ -135,8 +135,8 @@ describe('Namespace', function() {
       expect(ns.qpath('/photos/')).to.equal('/foo/photos/');
     });
     
-    it('should qualify module', function() {
-      expect(ns.qmodule('PhotosController')).to.equal('bar/photos');
+    it('should qualify controller', function() {
+      expect(ns.qcontroller('PhotosController')).to.equal('bar/photos');
     });
     
     it('should qualify function', function() {
@@ -170,8 +170,8 @@ describe('Namespace', function() {
       expect(ns.qpath('/photos/')).to.equal('/foo/photos/');
     });
     
-    it('should qualify module', function() {
-      expect(ns.qmodule('PhotosController')).to.equal('foo/photos');
+    it('should qualify controller', function() {
+      expect(ns.qcontroller('PhotosController')).to.equal('foo/photos');
     });
     
     it('should qualify function', function() {
@@ -205,8 +205,8 @@ describe('Namespace', function() {
       expect(ns.qpath('/photos/')).to.equal('/foo/photos/');
     });
     
-    it('should qualify module', function() {
-      expect(ns.qmodule('PhotosController')).to.equal('photos');
+    it('should qualify controller', function() {
+      expect(ns.qcontroller('PhotosController')).to.equal('photos');
     });
     
     it('should qualify function', function() {
@@ -240,8 +240,8 @@ describe('Namespace', function() {
       expect(ns.qpath(':photos:')).to.equal(':foo:photos:');
     });
     
-    it('should qualify module', function() {
-      expect(ns.qmodule('PhotosController')).to.equal('foo/photos');
+    it('should qualify controller', function() {
+      expect(ns.qcontroller('PhotosController')).to.equal('foo/photos');
     });
     
     it('should qualify function', function() {
@@ -276,8 +276,8 @@ describe('Namespace', function() {
       expect(http.qpath('/proxies/')).to.equal('/net/http/proxies/');
     });
     
-    it('should qualify module', function() {
-      expect(http.qmodule('ProxiesController')).to.equal('net/http/proxies');
+    it('should qualify controller', function() {
+      expect(http.qcontroller('ProxiesController')).to.equal('net/http/proxies');
     });
     
     it('should qualify function', function() {
@@ -313,8 +313,8 @@ describe('Namespace', function() {
       expect(http.qpath(':proxies:')).to.equal(':net:http:proxies:');
     });
     
-    it('should qualify module', function() {
-      expect(http.qmodule('ProxiesController')).to.equal('net/http/proxies');
+    it('should qualify controller', function() {
+      expect(http.qcontroller('ProxiesController')).to.equal('net/http/proxies');
     });
     
     it('should qualify function', function() {
