@@ -1,7 +1,38 @@
+/* global describe, it, expect */
+
 var utils = require('../lib/utils');
   
 
 describe('utils', function() {
+  
+  describe('#moduleize', function() {
+    
+    it('should normalize snake case path strings', function() {
+      expect(utils.moduleize('foo_bar_baz')).to.equal('fooBarBaz');
+      expect(utils.moduleize('fulano/foo')).to.equal('fulano/foo');
+      expect(utils.moduleize('fulano_sutano/foo_bar')).to.equal('fulanoSutano/fooBar');
+      expect(utils.moduleize('hoge/fulano/foo')).to.equal('hoge/fulano/foo');
+      expect(utils.moduleize('hoge_page/fulano_sutano/foo_bar')).to.equal('hogePage/fulanoSutano/fooBar');
+    });
+    
+    it('should normalize lower camel case path strings', function() {
+      expect(utils.moduleize('fooBarBaz')).to.equal('fooBarBaz');
+      expect(utils.moduleize('fulanoSutano/fooBar')).to.equal('fulanoSutano/fooBar');
+      expect(utils.moduleize('hogePage/fulanoSutano/fooBar')).to.equal('hogePage/fulanoSutano/fooBar');
+    });
+    
+    it('should normalize upper camel case path strings', function() {
+      expect(utils.moduleize('FooBarBaz')).to.equal('fooBarBaz');
+      expect(utils.moduleize('FulanoSutano/FooBar')).to.equal('fulanoSutano/fooBar');
+      expect(utils.moduleize('HogePage/FulanoSutano/FooBar')).to.equal('hogePage/fulanoSutano/fooBar');
+    });
+    
+    it('should return undefined if called without an argument', function() {
+      expect(utils.moduleize()).to.be.undefined;
+    });
+    
+  });
+  
   
   describe('#controllerize', function() {
     
@@ -104,35 +135,6 @@ describe('utils', function() {
     
     it('should return undefined if called without an argument', function() {
       expect(utils.functionize()).to.be.undefined;
-    });
-    
-  });
-  
-  
-  describe('#moduleize', function() {
-    
-    it('should normalize snake case path strings', function() {
-      expect(utils.moduleize('foo_bar_baz')).to.equal('fooBarBaz');
-      expect(utils.moduleize('fulano/foo')).to.equal('fulano/foo');
-      expect(utils.moduleize('fulano_sutano/foo_bar')).to.equal('fulanoSutano/fooBar');
-      expect(utils.moduleize('hoge/fulano/foo')).to.equal('hoge/fulano/foo');
-      expect(utils.moduleize('hoge_page/fulano_sutano/foo_bar')).to.equal('hogePage/fulanoSutano/fooBar');
-    });
-    
-    it('should normalize lower camel case path strings', function() {
-      expect(utils.moduleize('fooBarBaz')).to.equal('fooBarBaz');
-      expect(utils.moduleize('fulanoSutano/fooBar')).to.equal('fulanoSutano/fooBar');
-      expect(utils.moduleize('hogePage/fulanoSutano/fooBar')).to.equal('hogePage/fulanoSutano/fooBar');
-    });
-    
-    it('should normalize upper camel case path strings', function() {
-      expect(utils.moduleize('FooBarBaz')).to.equal('fooBarBaz');
-      expect(utils.moduleize('FulanoSutano/FooBar')).to.equal('fulanoSutano/fooBar');
-      expect(utils.moduleize('HogePage/FulanoSutano/FooBar')).to.equal('hogePage/fulanoSutano/fooBar');
-    });
-    
-    it('should return undefined if called without an argument', function() {
-      expect(utils.moduleize()).to.be.undefined;
     });
     
   });
