@@ -464,4 +464,34 @@ describe('Router#match', function() {
     });
   });
   
+  describe('shorthand notation with handler registered later', function() {
+    var app, router;
+    
+    before(function() {
+      app = new MockApplication();
+      router = new Router();
+      router.handler(handler);
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+      
+      router.match('songs/:title', 'songs#show');
+    });
+    
+    it('should define application routes', function() {
+      expect(app.map['get']).to.be.an('array');
+      expect(app.map['get']).to.have.length(1);
+    });
+    
+    it('should create route to controller action', function() {
+      var route = app.map['get'][0];
+      expect(route.path).to.equal('/songs/:title');
+      expect(route.handler).to.be.a('function');
+      
+      var rv = route.handler();
+      expect(rv.controller).to.equal('songs');
+      expect(rv.action).to.equal('show');
+    });
+  });
+  
 });
