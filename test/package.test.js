@@ -9,4 +9,8 @@ describe('actionrouter', function() {
     expect(router.Router).to.be.a('function');
   });
   
+  it('should export utilities', function() {
+    expect(router.util.controllerize).to.be.a('function');
+  });
+  
 });
