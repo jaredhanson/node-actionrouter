@@ -11,6 +11,7 @@ describe('actionrouter', function() {
   
   it('should export utilities', function() {
     expect(router.util.controllerize).to.be.a('function');
+    expect(router.util.functionize).to.be.a('function');
   });
   
 });
