@@ -58,6 +58,10 @@ describe('Entry', function() {
       expect(e.path({ id: 1234 })).to.equal('/user/1234');
     });
     
+    it('should build path with id set to 0', function() {
+      expect(e.path({ id: 0 })).to.equal('/user/0');
+    });
+    
     it('should throw when building path and missing placeholder options', function() {
       expect(function() {
         e.path();
@@ -97,6 +101,10 @@ describe('Entry', function() {
     it('should build path', function() {
       expect(e.path({ id: 1234 })).to.equal('/user/1234/profile');
     });
+    
+    it('should build path with id set to 0', function() {
+      expect(e.path({ id: 0 })).to.equal('/user/0/profile');
+    });
   });
   
   describe('with two placeholders', function() {
@@ -126,6 +134,10 @@ describe('Entry', function() {
     
     it('should build path', function() {
       expect(e.path({ id: 1234, name: 'jared-hanson' })).to.equal('/user/1234/jared-hanson');
+    });
+    
+    it('should build path with id set to 0', function() {
+      expect(e.path({ id: 0, name: 'jared-hanson' })).to.equal('/user/0/jared-hanson');
     });
   });
   
