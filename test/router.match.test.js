@@ -141,6 +141,24 @@ describe('Router#match', function() {
     });
   });
   
+  describe('shorthand notation and via option that is not a valid method', function() {
+    var app, router;
+    
+    before(function() {
+      app = new MockApplication();
+      router = new Router(handler);
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+    });
+    
+    it('should throw when declaring route', function() {
+      expect(function() {
+        router.match('bands', 'bands#create', { via: 'foo' });
+      }).to.throw('Method "foo" is not supported by protocol');
+    });
+  });
+  
   describe('shorthand notation with routing helper', function() {
     var app, router;
     
