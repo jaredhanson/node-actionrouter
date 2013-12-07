@@ -482,6 +482,90 @@ describe('Router#match', function() {
     });
   });
   
+  describe('middleware function with routing helper', function() {
+    var app, router;
+    
+    before(function() {
+      app = new MockApplication();
+      router = new Router(handler);
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+      router.assist(function(name, entry) {
+        app.helper(name, entry);
+      });
+      
+      router.match('hello', function() {
+        return 'Hello, Function';
+      }, { as: 'hello' });
+    });
+    
+    it('should define application route', function() {
+      expect(app.map['get']).to.be.an('array');
+      expect(app.map['get']).to.have.length(1);
+    });
+    
+    it('should create route to middleware to path', function() {
+      var route = app.map['get'][0];
+      expect(route.path).to.equal('/hello');
+      expect(route.handler).to.be.an('array');
+      expect(route.handler).to.have.length(1);
+      expect(route.handler[0]).to.be.a('function');
+      
+      var rv = route.handler[0]();
+      expect(rv).to.equal('Hello, Function');
+    });
+    
+    it('should register helper for route', function() {
+      var entry = app.helpers.hello;
+      
+      expect(entry).to.be.a('string');
+      expect(entry).to.equal('/hello');
+    });
+  });
+  
+  describe('middleware function with routing helper to path with pattern', function() {
+    var app, router;
+    
+    before(function() {
+      app = new MockApplication();
+      router = new Router(handler);
+      router.define(function(method, path, handler) {
+        app[method](path, handler);
+      });
+      router.assist(function(name, entry) {
+        app.helper(name, entry);
+      });
+      
+      router.match('hello/:name', function() {
+        return 'Hello, Function';
+      }, { as: 'hello' });
+    });
+    
+    it('should define application route', function() {
+      expect(app.map['get']).to.be.an('array');
+      expect(app.map['get']).to.have.length(1);
+    });
+    
+    it('should create route to middleware', function() {
+      var route = app.map['get'][0];
+      expect(route.path).to.equal('/hello/:name');
+      expect(route.handler).to.be.an('array');
+      expect(route.handler).to.have.length(1);
+      expect(route.handler[0]).to.be.a('function');
+      
+      var rv = route.handler[0]();
+      expect(rv).to.equal('Hello, Function');
+    });
+    
+    it('should register helper for route', function() {
+      var entry = app.helpers.hello;
+      
+      expect(entry).to.be.a('string');
+      expect(entry).to.equal('/hello/:name');
+    });
+  });
+  
   describe('shorthand notation with handler registered later', function() {
     var app, router;
     
