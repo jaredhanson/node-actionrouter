@@ -1,6 +1,6 @@
 {
   "name": "actionrouter",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "RESTful MVC router that dispatches to a controller and action.",
   "keywords": [
     "locomotive",
