@@ -1,3 +1,5 @@
+/* global describe, it, expect */
+
 var Router = require('../lib/router')
   , MockApplication = require('./mocks/mockapplication');
   
